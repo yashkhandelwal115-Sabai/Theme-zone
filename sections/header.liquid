@@ -39,12 +39,24 @@
         <!-- Search Bar -->
         <div class="header__search hidden-mobile flex-1 mx-8 max-w-[600px]">
           <form action="{{ routes.search_url }}" method="get" role="search" class="search-form flex">
-            <div class="search-category-dropdown flex items-center gap-2">
-              All Categories {% render 'icon', icon: 'chevron-down' %}
+            <div class="search-category-wrapper relative flex items-center">
+              <select name="filter.p.product_type" class="search-category-dropdown appearance-none bg-transparent border-none text-gray-400 cursor-pointer outline-none flex items-center gap-2 pr-6">
+                <option value="">All Categories</option>
+                {%- for product_type in shop.types -%}
+                  {%- if product_type != blank -%}
+                    <option value="{{ product_type | escape }}">{{ product_type | escape }}</option>
+                  {%- endif -%}
+                {%- endfor -%}
+              </select>
+              <div class="pointer-events-none absolute right-3 flex items-center text-gray-400">
+                {% render 'icon', icon: 'chevron-down' %}
+              </div>
             </div>
             <input class="search-form__input field__input" type="search" name="q" value="{{ search.terms | escape }}" placeholder="Search for products...">
-            <button class="search-form__button button button--primary" type="submit" aria-label="Search">
-              {% render 'icon', icon: 'search' %}
+            <button class="search-form__button button button--primary" type="submit" aria-label="Search" onclick="this.form.submit();">
+              <span style="pointer-events: none;">
+                {% render 'icon', icon: 'search' %}
+              </span>
             </button>
           </form>
         </div>
@@ -238,6 +250,54 @@
   .text-sm { font-size: 0.875rem; }
   .block { display: block; }
   .cursor-pointer { cursor: pointer; }
+
+  /* Mobile Responsiveness */
+  @media screen and (max-width: 800px) {
+    .header-topbar .page-width.flex {
+      flex-direction: column;
+      text-align: center;
+      gap: 0.5rem;
+      padding: 10px 0;
+    }
+    .header-topbar__right {
+      position: relative;
+      right: auto;
+      padding: 0;
+      justify-content: center;
+      width: 100%;
+    }
+    .header-main .flex.justify-between.mb-6 {
+      flex-wrap: wrap;
+    }
+    .header__heading {
+      width: auto;
+    }
+    .header__icons {
+      gap: 1rem;
+    }
+    .header__search {
+      order: 3;
+      width: 100%;
+      max-width: 100%;
+      margin: 10px 0 0 0;
+      display: block !important;
+    }
+    .search-category-wrapper {
+      display: none; /* Hide category dropdown on mobile to save space */
+    }
+    .header-nav {
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+      padding-bottom: 5px;
+    }
+    .list-menu--inline {
+      margin-left: 1rem;
+      gap: 1rem;
+    }
+    .categories-dropdown-menu {
+      display: none; /* Hide 'Categories' button on mobile to save space */
+    }
+  }
 </style>
 
 {% schema %}

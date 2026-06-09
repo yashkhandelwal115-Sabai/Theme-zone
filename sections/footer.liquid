@@ -90,27 +90,14 @@
                 <!-- Premium Fallback based on block index -->
                 {%- if forloop.index == 1 -%}
                   <li><a href="{{ routes.all_products_collection_url }}">All Products</a></li>
-                  <li><a href="/collections/smartphones">Smartphones</a></li>
-                  <li><a href="/collections/laptops">Laptops</a></li>
-                  <li><a href="/collections/gaming">Gaming</a></li>
-                  <li><a href="/collections/audio">Audio</a></li>
-                  <li><a href="/collections/accessories">Accessories</a></li>
-                  <li><a href="/collections/smart-home">Smart Home</a></li>
+                  <li><a href="{{ routes.all_products_collection_url }}">Smartphones</a></li>
+                  <li><a href="{{ routes.all_products_collection_url }}">Laptops</a></li>
+                  <li><a href="{{ routes.all_products_collection_url }}">Gaming</a></li>
+                  <li><a href="{{ routes.all_products_collection_url }}">Audio</a></li>
+                  <li><a href="{{ routes.all_products_collection_url }}">Accessories</a></li>
+                  <li><a href="{{ routes.all_products_collection_url }}">Smart Home</a></li>
                 {%- elsif forloop.index == 2 -%}
-                  <li><a href="/pages/track-order">Track Order</a></li>
-                  <li><a href="/pages/shipping-policy">Shipping & Delivery</a></li>
-                  <li><a href="/pages/refund-policy">Returns & Refunds</a></li>
-                  <li><a href="/pages/warranty-policy">Warranty Policy</a></li>
-                  <li><a href="/pages/faq">FAQs</a></li>
-                  <li><a href="/pages/contact-us">Support Center</a></li>
-                  <li><a href="/pages/contact-us">Contact Us</a></li>
-                {%- elsif forloop.index == 3 -%}
-                  <li><a href="/pages/about-us">About Us</a></li>
-                  <li><a href="/pages/careers">Careers</a></li>
-                  <li><a href="/pages/store-locator">Store Locator</a></li>
-                  <li><a href="/pages/press">Press</a></li>
-                  <li><a href="/pages/affiliates">Affiliates</a></li>
-                  <li><a href="/pages/sitemap">Sitemap</a></li>
+                  <li><a href="/pages/contact">Contact Us</a></li>
                 {%- else -%}
                   <li><a href="#">Link 1</a></li>
                   <li><a href="#">Link 2</a></li>
@@ -347,7 +334,7 @@
   /* Main Grid */
   .footer-main-grid {
     display: grid;
-    grid-template-columns: 2fr 1fr 1fr 1fr 1fr 1.5fr;
+    grid-template-columns: 2.5fr 1fr 1fr 1fr 1.5fr;
     gap: 40px;
     margin-bottom: 60px;
   }
@@ -658,9 +645,6 @@
   ],
   "default": {
     "blocks": [
-      {
-        "type": "link_list"
-      },
       {
         "type": "link_list"
       },
