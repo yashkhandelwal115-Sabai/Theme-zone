@@ -1,0 +1,96 @@
+{
+  "name": "Home page",
+  "wrapper": "main",
+  "sections": {
+    "hero": {
+      "type": "premium-hero",
+      "settings": {}
+    },
+    "trust_badges": {
+      "type": "trust-badges-row",
+      "settings": {}
+    },
+    "shop_by_category": {
+      "type": "shop-by-category",
+      "blocks": {
+        "cat1": { "type": "category" },
+        "cat2": { "type": "category" },
+        "cat3": { "type": "category" },
+        "cat4": { "type": "category" },
+        "cat5": { "type": "category" },
+        "cat6": { "type": "category" }
+      },
+      "block_order": ["cat1", "cat2", "cat3", "cat4", "cat5", "cat6"],
+      "settings": {}
+    },
+    "promotional_banners": {
+      "type": "promotional-banners",
+      "blocks": {
+        "promo1": { "type": "banner", "settings": { "title": "Gaming Gear", "text": "Level up your play" } },
+        "promo2": { "type": "banner", "settings": { "title": "Smart Watches", "text": "Track your fitness" } },
+        "promo3": { "type": "banner", "settings": { "title": "Headphones", "text": "Immersive sound" } }
+      },
+      "block_order": ["promo1", "promo2", "promo3"],
+      "settings": {}
+    },
+    "why_choose_us": {
+      "type": "why-choose-us",
+      "blocks": {
+        "feat1": { "type": "feature", "settings": { "title": "Premium Quality" } },
+        "feat2": { "type": "feature", "settings": { "title": "Best Prices" } },
+        "feat3": { "type": "feature", "settings": { "title": "Fast Delivery" } },
+        "feat4": { "type": "feature", "settings": { "title": "Warranty Support" } },
+        "feat5": { "type": "feature", "settings": { "title": "Expert Support" } }
+      },
+      "block_order": ["feat1", "feat2", "feat3", "feat4", "feat5"],
+      "settings": {}
+    },
+    "technical_specifications": {
+      "type": "technical-specifications",
+      "blocks": {
+        "spec1": { "type": "specification", "settings": { "title": "Display", "value": "6.7\" Super Retina XDR display" } },
+        "spec2": { "type": "specification", "settings": { "title": "Processor", "value": "A17 Pro chip" } },
+        "spec3": { "type": "specification", "settings": { "title": "RAM", "value": "8GB Unified Memory" } },
+        "spec4": { "type": "specification", "settings": { "title": "Storage", "value": "Up to 1TB NVMe" } },
+        "spec5": { "type": "specification", "settings": { "title": "Battery", "value": "Up to 29 hours video playback" } },
+        "spec6": { "type": "specification", "settings": { "title": "Camera", "value": "Pro camera system (48MP Main)" } }
+      },
+      "block_order": ["spec1", "spec2", "spec3", "spec4", "spec5", "spec6"],
+      "settings": {}
+    },
+    "compare_models": {
+      "type": "compare-models",
+      "blocks": {
+        "row1": { "type": "feature_row", "settings": { "feature_name": "Processor" } },
+        "row2": { "type": "feature_row", "settings": { "feature_name": "Display" } },
+        "row3": { "type": "feature_row", "settings": { "feature_name": "RAM" } },
+        "row4": { "type": "feature_row", "settings": { "feature_name": "Storage" } },
+        "row5": { "type": "feature_row", "settings": { "feature_name": "Camera" } },
+        "row6": { "type": "feature_row", "settings": { "feature_name": "Battery" } }
+      },
+      "block_order": ["row1", "row2", "row3", "row4", "row5", "row6"],
+      "settings": {}
+    },
+    "trust_strip": {
+      "type": "trust-strip",
+      "blocks": {
+        "trust1": { "type": "trust_item", "settings": { "title": "15 Day Returns" } },
+        "trust2": { "type": "trust_item", "settings": { "title": "Secure Checkout" } },
+        "trust3": { "type": "trust_item", "settings": { "title": "Trusted by Customers" } },
+        "trust4": { "type": "trust_item", "settings": { "title": "Official Warranty" } }
+      },
+      "block_order": ["trust1", "trust2", "trust3", "trust4"],
+      "settings": {}
+    }
+  },
+  "order": [
+    "hero",
+    "trust_badges",
+    "shop_by_category",
+    "why_choose_us",
+    "technical_specifications",
+    "compare_models",
+    "promotional_banners",
+    "trust_strip"
+  ]
+}
