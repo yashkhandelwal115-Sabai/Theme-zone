@@ -1,0 +1,115 @@
+[
+  {
+    "name": "theme_info",
+    "theme_name": "ThemeZone",
+    "theme_author": "Antigravity",
+    "theme_version": "1.0.0",
+    "theme_documentation_url": "https://help.shopify.com",
+    "theme_support_url": "https://support.shopify.com"
+  },
+  {
+    "name": "Colors",
+    "settings": [
+      {
+        "type": "color",
+        "id": "color_scheme_1_bg",
+        "label": "Electric Blue - Background",
+        "default": "#0A84FF"
+      },
+      {
+        "type": "color",
+        "id": "color_scheme_1_fg",
+        "label": "Electric Blue - Foreground",
+        "default": "#FFFFFF"
+      },
+      {
+        "type": "color",
+        "id": "color_scheme_2_bg",
+        "label": "Arctic White - Background",
+        "default": "#FFFFFF"
+      },
+      {
+        "type": "color",
+        "id": "color_scheme_2_fg",
+        "label": "Arctic White - Foreground",
+        "default": "#111111"
+      },
+      {
+        "type": "color",
+        "id": "color_scheme_3_bg",
+        "label": "Carbon Black - Background",
+        "default": "#111111"
+      },
+      {
+        "type": "color",
+        "id": "color_scheme_3_fg",
+        "label": "Carbon Black - Foreground",
+        "default": "#FFFFFF"
+      },
+      {
+        "type": "color",
+        "id": "color_scheme_4_bg",
+        "label": "Neon Green - Background",
+        "default": "#39FF14"
+      },
+      {
+        "type": "color",
+        "id": "color_scheme_4_fg",
+        "label": "Neon Green - Foreground",
+        "default": "#111111"
+      }
+    ]
+  },
+  {
+    "name": "Typography",
+    "settings": [
+      {
+        "type": "font_picker",
+        "id": "font_heading",
+        "label": "Heading Font",
+        "default": "inter_n4"
+      },
+      {
+        "type": "font_picker",
+        "id": "font_body",
+        "label": "Body Font",
+        "default": "roboto_n4"
+      }
+    ]
+  },
+  {
+    "name": "Social Media",
+    "settings": [
+      {
+        "type": "text",
+        "id": "social_facebook_link",
+        "label": "Facebook",
+        "info": "https://facebook.com/shopify"
+      },
+      {
+        "type": "text",
+        "id": "social_twitter_link",
+        "label": "X / Twitter",
+        "info": "https://x.com/shopify"
+      },
+      {
+        "type": "text",
+        "id": "social_instagram_link",
+        "label": "Instagram",
+        "info": "https://instagram.com/shopify"
+      },
+      {
+        "type": "text",
+        "id": "social_youtube_link",
+        "label": "YouTube",
+        "info": "https://youtube.com/shopify"
+      },
+      {
+        "type": "text",
+        "id": "social_tiktok_link",
+        "label": "TikTok",
+        "info": "https://tiktok.com/@shopify"
+      }
+    ]
+  }
+]

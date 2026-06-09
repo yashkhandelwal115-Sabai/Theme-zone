@@ -1,0 +1,12 @@
+{
+  "name": "About Us",
+  "wrapper": "main",
+  "sections": {
+    "main": {
+      "type": "about-us"
+    }
+  },
+  "order": [
+    "main"
+  ]
+}

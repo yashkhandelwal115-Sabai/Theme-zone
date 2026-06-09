@@ -1,0 +1,211 @@
+<div class="mockup-hero animate-fade-up">
+  <div class="page-width">
+    <div class="mockup-hero__inner grid grid-cols-2 items-center gap-8">
+      
+      <!-- Left Content -->
+      <div class="mockup-hero__content pr-8">
+        {%- if section.settings.badge != blank -%}
+          <div class="hero-badge mb-6 inline-block bg-primary text-white text-xs font-bold px-3 py-1 rounded uppercase tracking-wider">
+            {{ section.settings.badge }}
+          </div>
+        {%- endif -%}
+
+        <h2 class="hero-heading text-white mb-6 font-bold">{{ section.settings.heading | escape }}</h2>
+        
+        <p class="hero-description text-gray-300 mb-8 leading-relaxed">{{ section.settings.text | escape }}</p>
+        
+        {%- if section.settings.price != blank -%}
+          <div class="hero-price mb-8 text-white text-lg">
+            From <span class="text-2xl font-bold">{{ section.settings.price }}</span>
+          </div>
+        {%- endif -%}
+
+        <div class="hero-buttons flex gap-4">
+          {%- if section.settings.button_link != blank -%}
+            <a href="{{ section.settings.button_link }}" class="button button--primary px-8">{{ section.settings.button_label | escape }}</a>
+          {%- else -%}
+            <a href="{{ routes.all_products_collection_url }}" class="button button--primary px-8">{{ section.settings.button_label | escape }}</a>
+          {%- endif -%}
+          {%- if section.settings.button_link_2 != blank -%}
+            <a href="{{ section.settings.button_link_2 }}" class="button hero-button-outline px-8">{{ section.settings.button_label_2 | escape }}</a>
+          {%- else -%}
+            <a href="{{ routes.all_products_collection_url }}" class="button hero-button-outline px-8">{{ section.settings.button_label_2 | escape }}</a>
+          {%- endif -%}
+        </div>
+      </div>
+
+      <!-- Right Image -->
+      <div class="mockup-hero__image-wrapper relative flex justify-end">
+        <div class="hero-glow"></div>
+        {%- if section.settings.image != blank -%}
+          <img src="{{ section.settings.image | image_url: width: 800 }}" alt="{{ section.settings.heading | escape }}" width="800" height="auto" class="hero-image main-img z-10 relative">
+        {%- else -%}
+          <img src="{{ 'mockup-iphone.jpg' | asset_url }}" alt="iPhone 15 Pro" class="hero-image main-img z-10 relative" style="max-height: 500px; max-width: 100%; object-fit: contain; border-radius: 20px;">
+        {%- endif -%}
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<style>
+  .mockup-hero {
+    background-color: var(--color-secondary); /* #0B1120 */
+    padding: 4rem 0 10rem 0; /* Extra bottom padding for trust badges to overlap */
+    position: relative;
+    overflow: hidden;
+  }
+
+  /* Add light streaks/beams effect behind the image */
+  .mockup-hero::after {
+    content: '';
+    position: absolute;
+    top: 0; right: 0; width: 60%; height: 100%;
+    background: radial-gradient(ellipse at center, rgba(0, 85, 255, 0.15) 0%, transparent 70%);
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .mockup-hero__inner {
+    position: relative;
+    z-index: 1;
+  }
+
+  .bg-primary { background-color: var(--color-primary); }
+  .text-white { color: #fff; }
+  .text-gray-300 { color: #d1d5db; }
+  .inline-block { display: inline-block; }
+  .tracking-wider { letter-spacing: 0.05em; }
+  .leading-relaxed { line-height: 1.625; }
+
+  .hero-heading {
+    font-size: 4rem;
+    line-height: 1.1;
+    letter-spacing: -0.02em;
+  }
+
+  .hero-description {
+    font-size: 1.125rem;
+    max-width: 90%;
+  }
+
+  .text-lg { font-size: 1.125rem; }
+  .text-2xl { font-size: 1.5rem; }
+  .font-bold { font-weight: 700; }
+  .px-8 { padding-left: 2rem; padding-right: 2rem; }
+
+  .hero-button-outline {
+    background: transparent;
+    color: #fff;
+    border: 1px solid rgba(255,255,255,0.3);
+  }
+
+  .hero-button-outline:hover {
+    border-color: #fff;
+    background: rgba(255,255,255,0.1);
+  }
+
+  .hero-glow {
+    position: absolute;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    width: 600px; height: 600px;
+    background: conic-gradient(from 180deg at 50% 50%, rgba(0,85,255,0) 0deg, rgba(0,85,255,0.3) 180deg, rgba(0,85,255,0) 360deg);
+    filter: blur(40px);
+    border-radius: 50%;
+    opacity: 0.8;
+    z-index: 0;
+    animation: spin 10s linear infinite;
+  }
+
+  @keyframes spin {
+    from { transform: translate(-50%, -50%) rotate(0deg); }
+    to { transform: translate(-50%, -50%) rotate(360deg); }
+  }
+
+  .hero-image {
+    max-height: 600px;
+    object-fit: contain;
+  }
+
+  .placeholder-hero-image {
+    width: 100%;
+    height: 500px;
+    background: rgba(255,255,255,0.05);
+    border-radius: 20px;
+  }
+
+  @media screen and (max-width: 989px) {
+    .mockup-hero__inner { grid-template-columns: 1fr; text-align: center; }
+    .mockup-hero__content { padding-right: 0; }
+    .hero-heading { font-size: 2.5rem; }
+    .hero-description { margin-left: auto; margin-right: auto; }
+    .hero-buttons { justify-content: center; }
+    .hero-glow { display: none; }
+    .mockup-hero { padding-bottom: 6rem; }
+  }
+</style>
+
+{% schema %}
+{
+  "name": "Mockup Hero",
+  "settings": [
+    {
+      "type": "text",
+      "id": "badge",
+      "default": "NEW ARRIVAL",
+      "label": "Badge Text"
+    },
+    {
+      "type": "textarea",
+      "id": "heading",
+      "default": "iPhone 15 Pro\nTitanium. So strong.\nSo light. So Pro.",
+      "label": "Heading"
+    },
+    {
+      "type": "textarea",
+      "id": "text",
+      "default": "A17 Pro chip. Titanium design. Action button. Pro camera system. Next-level performance.",
+      "label": "Description"
+    },
+    {
+      "type": "text",
+      "id": "price",
+      "default": "$999.00",
+      "label": "Price Text"
+    },
+    {
+      "type": "text",
+      "id": "button_label",
+      "default": "Shop Now",
+      "label": "Primary Button Label"
+    },
+    {
+      "type": "url",
+      "id": "button_link",
+      "label": "Primary Button Link"
+    },
+    {
+      "type": "text",
+      "id": "button_label_2",
+      "default": "Learn More",
+      "label": "Secondary Button Label"
+    },
+    {
+      "type": "url",
+      "id": "button_link_2",
+      "label": "Secondary Button Link"
+    },
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Main Product Image"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Mockup Hero"
+    }
+  ]
+}
+{% endschema %}

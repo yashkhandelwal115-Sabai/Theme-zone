@@ -1,0 +1,42 @@
+<div class="customer register page-width py-8 flex justify-center">
+  <div class="register-form-wrapper w-100" style="max-width: 400px;">
+    <h1 class="h2 text-center mb-8">Create account</h1>
+
+    {%- form 'create_customer' -%}
+      {%- if form.errors -%}
+        <div class="form-message form-message--error mb-4">
+          <h2 class="h5 m-0">Please adjust the following:</h2>
+          {{ form.errors | default_errors }}
+        </div>
+      {%- endif -%}
+
+      <div class="field mb-4">
+        <label for="RegisterForm-FirstName" class="form__label">First name</label>
+        <input type="text" name="customer[first_name]" id="RegisterForm-FirstName" class="field__input" {% if form.first_name %}value="{{ form.first_name }}"{% endif %} autocomplete="given-name">
+      </div>
+
+      <div class="field mb-4">
+        <label for="RegisterForm-LastName" class="form__label">Last name</label>
+        <input type="text" name="customer[last_name]" id="RegisterForm-LastName" class="field__input" {% if form.last_name %}value="{{ form.last_name }}"{% endif %} autocomplete="family-name">
+      </div>
+
+      <div class="field mb-4">
+        <label for="RegisterForm-email" class="form__label">Email</label>
+        <input type="email" name="customer[email]" id="RegisterForm-email" class="field__input" {% if form.email %} value="{{ form.email }}"{% endif %} spellcheck="false" autocapitalize="off" autocomplete="email" aria-required="true" required>
+      </div>
+
+      <div class="field mb-4">
+        <label for="RegisterForm-password" class="form__label">Password</label>
+        <input type="password" name="customer[password]" id="RegisterForm-password" class="field__input" aria-required="true" required>
+      </div>
+
+      <button type="submit" class="button button--primary w-100 mt-4">Create</button>
+    {%- endform -%}
+  </div>
+</div>
+
+<style>
+  .w-100 { width: 100%; }
+  .form-message { padding: 1rem; border-radius: 8px; }
+  .form-message--error { background: #fee; color: #E32C2B; }
+</style>

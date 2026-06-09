@@ -1,0 +1,293 @@
+{{ 'page-careers.css' | asset_url | stylesheet_tag }}
+
+<div class="tz-page-careers">
+  
+  <!-- Hero Section -->
+  <div class="tz-page-careers__hero">
+    <div class="tz-page-careers__hero-gradient"></div>
+    {%- if section.settings.hero_image != blank -%}
+      <img src="{{ section.settings.hero_image | img_url: 'master' }}" class="tz-page-careers__hero-img" alt="Careers">
+    {%- endif -%}
+    <div class="tz-page-careers__hero-content">
+      <span class="tz-page-careers__hero-label">{{ section.settings.hero_label }}</span>
+      <h1 class="tz-page-careers__hero-title">{{ section.settings.hero_heading }}</h1>
+      <p class="tz-page-careers__hero-subtitle">{{ section.settings.hero_subheading }}</p>
+    </div>
+  </div>
+
+  <!-- Why Work With Us -->
+  <div class="tz-page-careers__benefits">
+    <div class="tz-page-careers__container">
+      <div class="tz-page-careers__section-header">
+        <h2 class="tz-page-careers__section-title">{{ section.settings.benefits_heading }}</h2>
+        <p class="tz-page-careers__section-subtitle">{{ section.settings.benefits_subheading }}</p>
+      </div>
+
+      <div class="tz-page-careers__benefits-grid">
+        <!-- Benefit 1 -->
+        <div class="tz-card-benefit">
+          <div class="tz-card-benefit__icon">
+            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
+          </div>
+          <h3 class="tz-card-benefit__title">Innovation First</h3>
+          <p class="tz-card-benefit__text">Work on cutting-edge technology and shape the future of consumer electronics.</p>
+        </div>
+        <!-- Benefit 2 -->
+        <div class="tz-card-benefit">
+          <div class="tz-card-benefit__icon">
+            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"></path></svg>
+          </div>
+          <h3 class="tz-card-benefit__title">Great Culture</h3>
+          <p class="tz-card-benefit__text">Join a diverse, inclusive, and highly collaborative team of experts.</p>
+        </div>
+        <!-- Benefit 3 -->
+        <div class="tz-card-benefit">
+          <div class="tz-card-benefit__icon">
+            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"></path></svg>
+          </div>
+          <h3 class="tz-card-benefit__title">Health & Wellness</h3>
+          <p class="tz-card-benefit__text">Comprehensive medical, dental, and vision coverage for you and your family.</p>
+        </div>
+        <!-- Benefit 4 -->
+        <div class="tz-card-benefit">
+          <div class="tz-card-benefit__icon">
+            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+          </div>
+          <h3 class="tz-card-benefit__title">Competitive Pay</h3>
+          <p class="tz-card-benefit__text">Top-tier salary packages, equity options, and generous performance bonuses.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Open Positions -->
+  <div class="tz-page-careers__jobs">
+    <div class="tz-page-careers__jobs-header">
+      <div>
+        <h2 class="tz-page-careers__section-title" style="text-align:left; margin-bottom: 8px;">{{ section.settings.jobs_heading }}</h2>
+        <p class="tz-page-careers__section-subtitle" style="text-align:left;">{{ section.settings.jobs_subheading }}</p>
+      </div>
+      <div class="tz-page-careers__jobs-badge">
+        {{ section.blocks.size }} Openings
+      </div>
+    </div>
+
+    <div class="tz-page-careers__jobs-list">
+      {%- for block in section.blocks -%}
+        {%- if block.type == 'job' -%}
+          <div class="tz-card-job" {{ block.shopify_attributes }}>
+            <div>
+              <div class="tz-card-job__meta">
+                <span class="tz-card-job__dept">{{ block.settings.department }}</span>
+                <span class="tz-card-job__info">
+                  <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
+                  {{ block.settings.location }}
+                </span>
+                <span class="tz-card-job__info">
+                  <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                  {{ block.settings.type }}
+                </span>
+              </div>
+              <h3 class="tz-card-job__title">{{ block.settings.title }}</h3>
+              <p class="tz-card-job__desc">{{ block.settings.description }}</p>
+            </div>
+            <div class="tz-card-job__action">
+              <a href="{{ block.settings.link | default: '#' }}" class="tz-btn--apply">
+                Apply Now
+              </a>
+            </div>
+          </div>
+        {%- endif -%}
+      {%- else -%}
+        <!-- Empty State if no blocks added -->
+        <div class="tz-page-careers__empty">
+          <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path></svg>
+          <h3>No open positions currently</h3>
+          <p>We aren't actively hiring right now, but we're always looking for great talent. Check back later!</p>
+        </div>
+      {%- endfor -%}
+    </div>
+  </div>
+
+  <!-- General Application CTA -->
+  <div class="tz-page-careers__cta">
+    <div class="tz-card-cta-careers">
+      <div class="tz-card-cta-careers__blob-1"></div>
+      <div class="tz-card-cta-careers__blob-2"></div>
+      
+      <h2 class="tz-card-cta-careers__title">{{ section.settings.cta_heading }}</h2>
+      <p class="tz-card-cta-careers__text">{{ section.settings.cta_text }}</p>
+      
+      <a href="mailto:{{ section.settings.cta_email }}" class="tz-btn--email">
+        Email your Resume
+      </a>
+    </div>
+  </div>
+
+</div>
+
+{% schema %}
+{
+  "name": "Careers Page",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Hero Section"
+    },
+    {
+      "type": "image_picker",
+      "id": "hero_image",
+      "label": "Background Image"
+    },
+    {
+      "type": "text",
+      "id": "hero_label",
+      "label": "Label",
+      "default": "Join Our Team"
+    },
+    {
+      "type": "text",
+      "id": "hero_heading",
+      "label": "Heading",
+      "default": "Build the future of retail."
+    },
+    {
+      "type": "textarea",
+      "id": "hero_subheading",
+      "label": "Subheading",
+      "default": "We're always looking for passionate, talented individuals to join our growing family."
+    },
+    {
+      "type": "header",
+      "content": "Benefits Section"
+    },
+    {
+      "type": "text",
+      "id": "benefits_heading",
+      "label": "Heading",
+      "default": "Why work with us?"
+    },
+    {
+      "type": "textarea",
+      "id": "benefits_subheading",
+      "label": "Subheading",
+      "default": "We believe in taking care of our people so they can take care of our customers."
+    },
+    {
+      "type": "header",
+      "content": "Open Positions Section"
+    },
+    {
+      "type": "text",
+      "id": "jobs_heading",
+      "label": "Heading",
+      "default": "Current Openings"
+    },
+    {
+      "type": "text",
+      "id": "jobs_subheading",
+      "label": "Subheading",
+      "default": "Find your perfect role below."
+    },
+    {
+      "type": "header",
+      "content": "Call To Action"
+    },
+    {
+      "type": "text",
+      "id": "cta_heading",
+      "label": "Heading",
+      "default": "Don't see a fit?"
+    },
+    {
+      "type": "textarea",
+      "id": "cta_text",
+      "label": "Text",
+      "default": "We're always open to meeting talented people. Send us your resume and we'll keep it on file."
+    },
+    {
+      "type": "text",
+      "id": "cta_email",
+      "label": "Contact Email",
+      "default": "careers@themezone.com"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "job",
+      "name": "Job Opening",
+      "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Job Title",
+          "default": "Frontend Developer"
+        },
+        {
+          "type": "text",
+          "id": "department",
+          "label": "Department",
+          "default": "Engineering"
+        },
+        {
+          "type": "text",
+          "id": "location",
+          "label": "Location",
+          "default": "San Francisco, CA (Remote)"
+        },
+        {
+          "type": "text",
+          "id": "type",
+          "label": "Employment Type",
+          "default": "Full-Time"
+        },
+        {
+          "type": "textarea",
+          "id": "description",
+          "label": "Short Description",
+          "default": "We are looking for an experienced Frontend Developer to help build our next generation e-commerce platform using React and Shopify."
+        },
+        {
+          "type": "url",
+          "id": "link",
+          "label": "Application Link"
+        }
+      ]
+    }
+  ],
+  "default": {
+    "blocks": [
+      {
+        "type": "job",
+        "settings": {
+          "title": "Senior Frontend Engineer",
+          "department": "Engineering",
+          "location": "Remote",
+          "type": "Full-Time",
+          "description": "Lead the development of our storefront architecture using modern web technologies."
+        }
+      },
+      {
+        "type": "job",
+        "settings": {
+          "title": "Product Marketing Manager",
+          "department": "Marketing",
+          "location": "New York, NY",
+          "type": "Full-Time",
+          "description": "Drive the go-to-market strategy for our new premium audio product line."
+        }
+      },
+      {
+        "type": "job",
+        "settings": {
+          "title": "Customer Success Specialist",
+          "department": "Support",
+          "location": "Remote",
+          "type": "Part-Time",
+          "description": "Help our customers get the most out of their smart home purchases."
+        }
+      }
+    ]
+  }
+}
+{% endschema %}

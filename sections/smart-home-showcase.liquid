@@ -1,0 +1,87 @@
+<div class="smart-home-showcase color-scheme-{{ section.settings.color_scheme }} py-8">
+  <div class="page-width">
+    <div class="grid grid-cols-2 align-center">
+      <div class="smart-home-showcase__media">
+        {%- if section.settings.image != blank -%}
+          <img src="{{ section.settings.image | image_url: width: 800 }}" alt="{{ section.settings.heading }}" loading="lazy" width="800" height="auto" class="rounded-xl shadow-lg">
+        {%- else -%}
+          {{ 'lifestyle-1' | placeholder_svg_tag: 'placeholder-svg rounded-xl shadow-lg' }}
+        {%- endif -%}
+      </div>
+      <div class="smart-home-showcase__content pl-8">
+        <h2 class="h1">{{ section.settings.heading | escape }}</h2>
+        <p class="h4 mt-4 mb-8">{{ section.settings.text | escape }}</p>
+        {%- if section.settings.button_label != blank -%}
+          <a href="{{ section.settings.button_link }}" class="button button--primary">{{ section.settings.button_label | escape }}</a>
+        {%- endif -%}
+      </div>
+    </div>
+  </div>
+</div>
+
+<style>
+  .smart-home-showcase { padding-top: 6rem; padding-bottom: 6rem; }
+  .align-center { align-items: center; }
+  .pl-8 { padding-left: 4rem; }
+  .rounded-xl { border-radius: 16px; overflow: hidden; display: block; }
+  .shadow-lg { box-shadow: 0 20px 40px rgba(0,0,0,0.1); }
+  .smart-home-showcase__media img, .smart-home-showcase__media svg { width: 100%; height: auto; }
+  @media screen and (max-width: 749px) {
+    .smart-home-showcase .grid-cols-2 { grid-template-columns: 1fr; gap: 3rem; }
+    .pl-8 { padding-left: 0; }
+    .smart-home-showcase__media { order: -1; }
+  }
+</style>
+
+{% schema %}
+{
+  "name": "Smart Home Showcase",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "default": "Automate Your Life",
+      "label": "Heading"
+    },
+    {
+      "type": "textarea",
+      "id": "text",
+      "default": "Discover smart devices that make your home intelligent, secure, and efficient.",
+      "label": "Text"
+    },
+    {
+      "type": "text",
+      "id": "button_label",
+      "default": "Shop Smart Home",
+      "label": "Button label"
+    },
+    {
+      "type": "url",
+      "id": "button_link",
+      "label": "Button link"
+    },
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Image"
+    },
+    {
+      "type": "select",
+      "id": "color_scheme",
+      "options": [
+        { "value": "1", "label": "Electric Blue" },
+        { "value": "2", "label": "Arctic White" },
+        { "value": "3", "label": "Carbon Black" },
+        { "value": "4", "label": "Neon Green" }
+      ],
+      "default": "2",
+      "label": "Color scheme"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Smart Home Showcase"
+    }
+  ]
+}
+{% endschema %}

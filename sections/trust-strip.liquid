@@ -1,0 +1,80 @@
+<div class="mockup-trust-strip py-12 animate-fade-up">
+  <div class="page-width">
+    <div class="grid grid-cols-2 md-grid-cols-4 gap-8 border-t border-gray-800 pt-12">
+      
+      {%- for block in section.blocks -%}
+        <div class="mockup-trust-strip-card flex items-center gap-4" {{ block.shopify_attributes }}>
+          <div class="mockup-trust-strip-card__icon">
+            <!-- Using generic outline icons -->
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" width="24" height="24" class="text-gray-400">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+            </svg>
+          </div>
+          <div class="mockup-trust-strip-card__text">
+            <h4 class="m-0 text-white font-bold text-sm">{{ block.settings.title | escape }}</h4>
+            <p class="m-0 text-xs text-gray-400 mt-1">{{ block.settings.subtitle | escape }}</p>
+          </div>
+        </div>
+      {%- endfor -%}
+
+    </div>
+  </div>
+</div>
+
+<style>
+  .mockup-trust-strip {
+    background-color: #060B19; /* Very dark background */
+  }
+
+  .border-t { border-top-width: 1px; border-top-style: solid; }
+  .border-gray-800 { border-color: rgba(255,255,255,0.1); }
+  .pt-12 { padding-top: 3rem; }
+  .text-white { color: #fff; }
+  .text-gray-400 { color: #9ca3af; }
+  .text-sm { font-size: 0.875rem; }
+  .text-xs { font-size: 0.75rem; }
+  .font-bold { font-weight: 700; }
+
+  @media screen and (min-width: 750px) {
+    .md-grid-cols-4 { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+  }
+</style>
+
+{% schema %}
+{
+  "name": "Mockup Trust Strip",
+  "max_blocks": 4,
+  "settings": [],
+  "blocks": [
+    {
+      "type": "trust_item",
+      "name": "Trust Item",
+      "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "default": "15 Days Returns",
+          "label": "Title"
+        },
+        {
+          "type": "text",
+          "id": "subtitle",
+          "default": "No questions asked",
+          "label": "Subtitle"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Mockup Trust Strip",
+      "blocks": [
+        { "type": "trust_item", "settings": { "title": "15 Days Returns", "subtitle": "No questions asked" } },
+        { "type": "trust_item", "settings": { "title": "Secure Checkout", "subtitle": "100% protected" } },
+        { "type": "trust_item", "settings": { "title": "Trusted by 10K+", "subtitle": "Happy customers" } },
+        { "type": "trust_item", "settings": { "title": "Official Warranty", "subtitle": "On all products" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

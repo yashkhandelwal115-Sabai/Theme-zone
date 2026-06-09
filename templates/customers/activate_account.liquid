@@ -1,0 +1,35 @@
+<div class="customer activate page-width py-8 flex justify-center">
+  <div class="activate-form-wrapper w-100 text-center" style="max-width: 400px;">
+    <h1 class="h2 mb-4">Activate account</h1>
+    <p class="mb-8">Create your password to activate your account.</p>
+
+    {%- form 'activate_customer_password' -%}
+      {%- if form.errors -%}
+        <div class="form-message form-message--error mb-4 text-left">
+          <h2 class="h5 m-0">Please adjust the following:</h2>
+          {{ form.errors | default_errors }}
+        </div>
+      {%- endif -%}
+
+      <div class="field mb-4">
+        <label for="password" class="form__label text-left">Password</label>
+        <input type="password" name="customer[password]" id="password" class="field__input" autocomplete="new-password">
+      </div>
+
+      <div class="field mb-4">
+        <label for="password_confirmation" class="form__label text-left">Confirm password</label>
+        <input type="password" name="customer[password_confirmation]" id="password_confirmation" class="field__input" autocomplete="new-password">
+      </div>
+
+      <button name="commit" class="button button--primary w-100 mb-4">Activate account</button>
+      <button name="decline" class="button button--secondary w-100">Decline invitation</button>
+    {%- endform -%}
+  </div>
+</div>
+
+<style>
+  .w-100 { width: 100%; }
+  .form-message { padding: 1rem; border-radius: 8px; }
+  .form-message--error { background: #fee; color: #E32C2B; }
+  .text-left { text-align: left; }
+</style>

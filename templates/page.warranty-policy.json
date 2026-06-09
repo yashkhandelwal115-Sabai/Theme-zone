@@ -1,0 +1,17 @@
+{
+  "name": "Warranty Policy",
+  "wrapper": "main",
+  "sections": {
+    "main": {
+      "type": "policy-layout",
+      "settings": {
+        "title": "Warranty Policy",
+        "last_updated": "October 2023",
+        "show_sidebar": true
+      }
+    }
+  },
+  "order": [
+    "main"
+  ]
+}

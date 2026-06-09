@@ -1,0 +1,90 @@
+<div class="demo-page-container bg-gray-50 min-h-screen py-16">
+  <div class="max-w-4xl mx-auto px-6">
+    
+    <!-- Warning Alert -->
+    <div class="bg-blue-50 border border-blue-200 rounded-xl p-6 mb-12 flex gap-4 items-start shadow-sm">
+      <div class="text-blue-500 mt-1">
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+      </div>
+      <div>
+        <h3 class="text-blue-900 font-bold text-lg mb-1">Demo Page Preview</h3>
+        <p class="text-blue-700 text-sm m-0">This is a premium template preview because you haven't created this page in your Shopify Admin yet. To replace this preview with your real content, simply create the page in your Shopify dashboard.</p>
+      </div>
+    </div>
+
+    <!-- Page Content Mockup -->
+    <div class="bg-white rounded-2xl shadow-sm border border-gray-100 p-8 md:p-16">
+      
+      {%- assign path_parts = request.path | split: '/' -%}
+      {%- assign page_handle = path_parts.last | replace: '-', ' ' | capitalize -%}
+      
+      <h1 class="text-4xl font-bold text-gray-900 mb-8 pb-8 border-b border-gray-100">
+        {{ page_handle | default: 'Legal Document' }}
+      </h1>
+
+      <div class="prose prose-blue max-w-none text-gray-600">
+        <p class="text-lg leading-relaxed mb-6">
+          Welcome to our {{ page_handle }}. This document is designed to provide you with important information about how we operate, your rights, and our commitments to you as a valued customer of ThemeZone.
+        </p>
+
+        <h2 class="text-2xl font-bold text-gray-900 mt-12 mb-4">1. Introduction</h2>
+        <p class="mb-6">
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+        </p>
+
+        <h2 class="text-2xl font-bold text-gray-900 mt-12 mb-4">2. Terms of Use</h2>
+        <p class="mb-6">
+          Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+        </p>
+
+        <div class="bg-gray-50 rounded-xl p-6 my-8 border border-gray-100 border-l-4 border-l-blue-500">
+          <p class="m-0 text-gray-700 font-medium">
+            <strong>Note:</strong> This is a placeholder section to demonstrate how blockquotes and highlighted information will beautifully render within your theme.
+          </p>
+        </div>
+
+        <h2 class="text-2xl font-bold text-gray-900 mt-12 mb-4">3. Privacy & Data</h2>
+        <p class="mb-6">
+          Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo.
+        </p>
+
+        <ul class="list-disc pl-6 mb-6 space-y-2">
+          <li>Secure data processing and storage protocols</li>
+          <li>Transparent data collection policies</li>
+          <li>Full compliance with international privacy standards</li>
+          <li>User-controlled data management</li>
+        </ul>
+
+        <h2 class="text-2xl font-bold text-gray-900 mt-12 mb-4">4. Contact Information</h2>
+        <p class="mb-6">
+          If you have any questions or concerns about this {{ page_handle }}, please contact our support team. We are available 24/7 to assist you.
+        </p>
+        
+        <p class="mt-12 text-sm text-gray-400">
+          Last updated: {{ 'now' | date: '%B %d, %Y' }}
+        </p>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<style>
+  .min-h-screen { min-height: 100vh; }
+  .max-w-4xl { max-width: 56rem; }
+  .bg-gray-50 { background-color: #F9FAFB; }
+  .bg-blue-50 { background-color: #EFF6FF; }
+  .border-blue-200 { border-color: #BFDBFE; }
+  .border-l-4 { border-left-width: 4px; border-style: solid; }
+  .border-l-blue-500 { border-left-color: #3B82F6; }
+  .text-blue-500 { color: #3B82F6; }
+  .text-blue-700 { color: #1D4ED8; }
+  .text-blue-900 { color: #1E3A8A; }
+  .text-gray-900 { color: #111827; }
+  .text-gray-700 { color: #374151; }
+  .text-gray-600 { color: #4B5563; }
+  .text-gray-400 { color: #9CA3AF; }
+  .prose p { margin-bottom: 1.5rem; line-height: 1.75; }
+  .prose ul { list-style-type: disc; padding-left: 1.5rem; margin-bottom: 1.5rem; }
+  .prose li { margin-bottom: 0.5rem; }
+</style>

@@ -1,0 +1,217 @@
+/* Premium Policy Page Styles */
+.tz-page-policy {
+  font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  background-color: #F9FAFB; /* gray-50 */
+  color: #111827;
+  padding: 100px 24px;
+  min-height: 100vh;
+}
+
+.tz-page-policy__container {
+  max-width: 1024px;
+  margin: 0 auto;
+}
+
+/* Header */
+.tz-page-policy__header {
+  margin-bottom: 64px;
+  border-bottom: 1px solid #E5E7EB;
+  padding-bottom: 48px;
+}
+
+.tz-page-policy__title {
+  font-size: 2.25rem;
+  font-weight: 700;
+  margin-bottom: 16px;
+  color: #111827;
+  letter-spacing: -0.025em;
+}
+
+@media (min-width: 768px) {
+  .tz-page-policy__title {
+    font-size: 3rem;
+  }
+}
+
+.tz-page-policy__meta {
+  color: #6B7280;
+  font-weight: 500;
+}
+
+/* Main Layout Grid */
+.tz-page-policy__layout {
+  display: flex;
+  flex-direction: column;
+  gap: 48px;
+}
+
+@media (min-width: 768px) {
+  .tz-page-policy__layout {
+    flex-direction: row;
+  }
+}
+
+/* Sidebar Navigation */
+.tz-page-policy__sidebar {
+  display: none;
+}
+
+@media (min-width: 768px) {
+  .tz-page-policy__sidebar {
+    display: block;
+    width: 25%;
+    flex-shrink: 0;
+  }
+}
+
+.tz-card-sidebar {
+  position: sticky;
+  top: 48px;
+  background-color: #ffffff;
+  border-radius: 16px;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.02);
+  border: 1px solid #F3F4F6;
+  padding: 24px;
+}
+
+.tz-card-sidebar__title {
+  font-weight: 700;
+  color: #111827;
+  margin-bottom: 16px;
+  text-transform: uppercase;
+  font-size: 0.75rem;
+  letter-spacing: 0.05em;
+}
+
+.tz-card-sidebar__list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.tz-card-sidebar__loading {
+  color: #9CA3AF;
+  font-size: 0.875rem;
+  font-style: italic;
+}
+
+.tz-card-sidebar__link {
+  color: #4B5563;
+  font-size: 0.875rem;
+  text-decoration: none;
+  transition: all 0.2s ease;
+  display: block;
+  line-height: 1.4;
+}
+
+.tz-card-sidebar__link:hover {
+  color: #2563EB;
+}
+
+.tz-card-sidebar__link.active {
+  color: #2563EB;
+  font-weight: 700;
+}
+
+/* Main Content Area */
+.tz-page-policy__content-area {
+  width: 100%;
+}
+
+@media (min-width: 768px) {
+  .tz-page-policy__content-area {
+    width: 75%;
+  }
+}
+
+.tz-card-content {
+  background-color: #ffffff;
+  border-radius: 24px;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.02);
+  border: 1px solid #F3F4F6;
+  padding: 32px;
+}
+
+@media (min-width: 768px) {
+  .tz-card-content {
+    padding: 56px;
+  }
+}
+
+/* Prose Styles */
+.tz-prose {
+  color: #4B5563;
+  line-height: 1.8;
+  font-size: 1.125rem;
+}
+
+.tz-prose h2 {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #111827;
+  margin-top: 48px;
+  margin-bottom: 16px;
+  scroll-margin-top: 100px;
+}
+
+.tz-prose h2:first-child {
+  margin-top: 0;
+}
+
+.tz-prose h3 {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: #111827;
+  margin-top: 32px;
+  margin-bottom: 16px;
+}
+
+.tz-prose p {
+  margin-bottom: 24px;
+}
+
+.tz-prose ul {
+  list-style-type: disc;
+  padding-left: 24px;
+  margin-bottom: 24px;
+}
+
+.tz-prose li {
+  margin-bottom: 8px;
+}
+
+.tz-prose a {
+  color: #2563EB;
+  text-decoration: underline;
+}
+
+.tz-prose a:hover {
+  color: #1D4ED8;
+}
+
+.tz-prose strong {
+  font-weight: 700;
+  color: #111827;
+}
+
+/* Note Callout */
+.tz-prose-note {
+  background-color: #EFF6FF;
+  border-left: 4px solid #3B82F6;
+  padding: 24px;
+  border-radius: 0 12px 12px 0;
+  margin: 32px 0;
+}
+
+.tz-prose-note p {
+  margin: 0;
+  font-weight: 500;
+  color: #1E3A8A;
+}
+
+.tz-prose-note strong {
+  color: #1E3A8A;
+}

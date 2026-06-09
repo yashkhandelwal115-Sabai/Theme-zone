@@ -1,0 +1,118 @@
+<article class="main-article page-width page-width--narrow py-8">
+  <header class="article-header text-center mb-8">
+    <h1 class="h1 mb-4">{{ article.title | escape }}</h1>
+    <div class="article-meta text-sm">
+      {%- if section.settings.show_date -%}
+        <span>{{ article.published_at | time_tag: format: 'date' }}</span>
+      {%- endif -%}
+      {%- if section.settings.show_author -%}
+        <span class="ml-2">by {{ article.author }}</span>
+      {%- endif -%}
+    </div>
+  </header>
+
+  {%- if article.image -%}
+    <div class="article-image mb-8">
+      <img src="{{ article.image | image_url: width: 1200 }}" alt="{{ article.image.alt | escape }}" loading="lazy" width="1200" height="auto" class="w-100 rounded">
+    </div>
+  {%- endif -%}
+
+  <div class="article-content rte mb-8">
+    {{ article.content }}
+  </div>
+
+  {%- if blog.comments_enabled? -%}
+    <div class="article-comments mt-8 pt-8 border-top">
+      <h2 class="h3">Comments</h2>
+
+      {%- if article.comments_count > 0 -%}
+        {%- paginate article.comments by 5 -%}
+          <div class="comments mt-8">
+            {%- for comment in article.comments -%}
+              <div class="comment mb-4 p-4 border rounded" id="{{ comment.id }}">
+                <div class="comment-meta mb-2 font-bold">
+                  {{ comment.author }} <span class="text-sm font-normal color-subdued ml-2">{{ comment.created_at | time_tag: format: 'date' }}</span>
+                </div>
+                <div class="comment-content rte">
+                  {{ comment.content }}
+                </div>
+              </div>
+            {%- endfor -%}
+          </div>
+          {%- if paginate.pages > 1 -%}
+            <div class="pagination text-center mt-8">
+              {{ paginate | default_pagination }}
+            </div>
+          {%- endif -%}
+        {%- endpaginate -%}
+      {%- endif -%}
+
+      <div class="comment-form mt-8">
+        <h3 class="h4">Leave a comment</h3>
+        {%- form 'new_comment', article -%}
+          {%- if form.errors -%}
+            <div class="form-message form-message--error">
+              {{ form.errors | default_errors }}
+            </div>
+          {%- elsif form.posted_successfully? -%}
+            <div class="form-message form-message--success">
+              {%- if blog.moderated? -%}
+                Your comment was posted successfully. We will publish it in a little while, as our blog is moderated.
+              {%- else -%}
+                Your comment was posted successfully!
+              {%- endif -%}
+            </div>
+          {%- endif -%}
+
+          <div class="grid grid-cols-2 gap-4 mb-4">
+            <div class="field">
+              <label for="CommentAuthor" class="form__label">Name</label>
+              <input type="text" name="comment[author]" id="CommentAuthor" class="field__input" autocomplete="name" value="{{ form.author }}" aria-required="true" required>
+            </div>
+            <div class="field">
+              <label for="CommentEmail" class="form__label">Email</label>
+              <input type="email" name="comment[email]" id="CommentEmail" class="field__input" autocomplete="email" value="{{ form.email }}" autocorrect="off" autocapitalize="off" aria-required="true" required>
+            </div>
+          </div>
+          <div class="field mb-4">
+            <label for="CommentBody" class="form__label">Message</label>
+            <textarea name="comment[body]" id="CommentBody" class="field__input text-area" rows="5" aria-required="true" required>{{ form.body }}</textarea>
+          </div>
+          <button type="submit" class="button button--primary">Post comment</button>
+        {%- endform -%}
+      </div>
+    </div>
+  {%- endif -%}
+</article>
+
+<style>
+  .page-width--narrow { max-width: 800px; margin: 0 auto; }
+  .article-meta { color: rgba(0,0,0,0.6); }
+  .border-top { border-top: 1px solid rgba(0,0,0,0.1); }
+  .color-subdued { color: rgba(0,0,0,0.6); }
+  .font-normal { font-weight: normal; }
+  .gap-4 { gap: 1rem; }
+  .form-message { padding: 1rem; margin-bottom: 1rem; border-radius: 8px; }
+  .form-message--error { background: #fee; color: #E32C2B; }
+  .form-message--success { background: #efe; color: #2E8B57; }
+</style>
+
+{% schema %}
+{
+  "name": "Article",
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "show_date",
+      "default": true,
+      "label": "Show date"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_author",
+      "default": false,
+      "label": "Show author"
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,68 @@
+<div class="contact-page page-width page-width--narrow py-8">
+  <h1 class="h1 text-center mb-8">{{ page.title | escape }}</h1>
+  {%- if page.content != blank -%}
+    <div class="rte mb-8 text-center">
+      {{ page.content }}
+    </div>
+  {%- endif -%}
+
+  <div class="contact-form">
+    {%- form 'contact', id: 'ContactForm' -%}
+      {%- if form.posted_successfully? -%}
+        <div class="form-message form-message--success text-center mb-8" tabindex="-1" autofocus>
+          Thanks for contacting us. We'll get back to you as soon as possible.
+        </div>
+      {%- elsif form.errors -%}
+        <div class="form-message form-message--error mb-8">
+          <h2 class="h4">Please adjust the following:</h2>
+          <ul class="list-unstyled">
+            {%- for error in form.errors -%}
+              <li>{{ error | capitalize }} {{ form.errors.messages[error] }}</li>
+            {%- endfor -%}
+          </ul>
+        </div>
+      {%- endif -%}
+
+      <div class="grid grid-cols-2 gap-4 mb-4">
+        <div class="field">
+          <label class="form__label" for="ContactForm-name">Name</label>
+          <input class="field__input" autocomplete="name" type="text" id="ContactForm-name" name="contact[name]" value="{% if form.name %}{{ form.name }}{% elsif customer %}{{ customer.name }}{% endif %}">
+        </div>
+        <div class="field">
+          <label class="form__label" for="ContactForm-email">Email <span aria-hidden="true">*</span></label>
+          <input autocomplete="email" type="email" id="ContactForm-email" class="field__input" name="contact[email]" spellcheck="false" autocapitalize="off" value="{% if form.email %}{{ form.email }}{% elsif customer %}{{ customer.email }}{% endif %}" aria-required="true" required>
+        </div>
+      </div>
+      <div class="field mb-4">
+        <label class="form__label" for="ContactForm-phone">Phone number</label>
+        <input type="tel" id="ContactForm-phone" class="field__input" autocomplete="tel" name="contact[phone]" pattern="[0-9\-]*" value="{% if form.phone %}{{ form.phone }}{% elsif customer %}{{ customer.phone }}{% endif %}">
+      </div>
+      <div class="field mb-4">
+        <label class="form__label" for="ContactForm-body">Message <span aria-hidden="true">*</span></label>
+        <textarea rows="10" id="ContactForm-body" class="field__input text-area" name="contact[body]" aria-required="true" required>{%- if form.body -%}{{ form.body }}{%- endif -%}</textarea>
+      </div>
+      <div class="contact__button text-center">
+        <button type="submit" class="button button--primary">
+          Send
+        </button>
+      </div>
+    {%- endform -%}
+  </div>
+</div>
+
+<style>
+  .gap-4 { gap: 1rem; }
+  .form-message { padding: 1rem; border-radius: 8px; }
+  .form-message--success { background: #efe; color: #2E8B57; }
+  .form-message--error { background: #fee; color: #E32C2B; }
+  @media screen and (max-width: 749px) {
+    .contact-form .grid-cols-2 { grid-template-columns: 1fr; }
+  }
+</style>
+
+{% schema %}
+{
+  "name": "Contact form",
+  "settings": []
+}
+{% endschema %}

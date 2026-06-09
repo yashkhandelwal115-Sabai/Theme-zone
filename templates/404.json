@@ -1,0 +1,17 @@
+{
+  "name": "404",
+  "wrapper": "main",
+  "sections": {
+    "main": {
+      "type": "main-404",
+      "settings": {
+        "title": "Oops! We lost signal.",
+        "subtitle": "The page you're looking for doesn't exist or has been moved.",
+        "show_search": true
+      }
+    }
+  },
+  "order": [
+    "main"
+  ]
+}

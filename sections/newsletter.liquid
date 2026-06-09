@@ -1,0 +1,77 @@
+<div class="newsletter section-header color-scheme-{{ section.settings.color_scheme }} py-8 text-center">
+  <div class="page-width">
+    <h2>{{ section.settings.heading | escape }}</h2>
+    {%- if section.settings.text != blank -%}
+      <div class="newsletter__subtext">{{ section.settings.text }}</div>
+    {%- endif -%}
+    
+    {% form 'customer', class: 'newsletter-form mt-4' %}
+      <input type="hidden" name="contact[tags]" value="newsletter">
+      <div class="newsletter-form__field-wrapper">
+        <div class="field" style="display: flex; max-width: 500px; margin: 0 auto; gap: 0.5rem;">
+          <input
+            id="NewsletterForm--{{ section.id }}"
+            type="email"
+            name="contact[email]"
+            class="field__input"
+            value="{{ form.email }}"
+            aria-required="true"
+            autocorrect="off"
+            autocapitalize="off"
+            autocomplete="email"
+            placeholder="Email address"
+            required
+          >
+          <button type="submit" class="button button--primary" name="commit" id="Subscribe">
+            Subscribe
+          </button>
+        </div>
+        {%- if form.posted_successfully? -%}
+          <p class="mt-4" tabindex="-1" autofocus>Thanks for subscribing!</p>
+        {%- endif -%}
+      </div>
+    {% endform %}
+  </div>
+</div>
+
+<style>
+  .newsletter { padding: 4rem 0; }
+  .newsletter-form { max-width: 600px; margin: 0 auto; }
+</style>
+
+{% schema %}
+{
+  "name": "Newsletter",
+  "settings": [
+    {
+      "type": "select",
+      "id": "color_scheme",
+      "options": [
+        { "value": "1", "label": "Electric Blue" },
+        { "value": "2", "label": "Arctic White" },
+        { "value": "3", "label": "Carbon Black" },
+        { "value": "4", "label": "Neon Green" }
+      ],
+      "default": "1",
+      "label": "Color scheme"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "default": "Subscribe to our emails",
+      "label": "Heading"
+    },
+    {
+      "type": "richtext",
+      "id": "text",
+      "default": "<p>Be the first to know about new collections and exclusive offers.</p>",
+      "label": "Text"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Newsletter"
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,103 @@
+<div class="mockup-trust-badges animate-fade-up">
+  <div class="page-width">
+    <div class="mockup-trust-badges__container bg-white shadow-soft rounded-[20px] p-6 mx-auto relative z-20 flex justify-between items-center">
+      
+      <!-- Free Shipping -->
+      <div class="trust-badge-item flex items-center gap-4 flex-1 justify-center border-r border-gray-100 last:border-0">
+        <div class="trust-badge-icon text-primary">
+          <!-- Truck Icon -->
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" width="32" height="32">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 18.75a1.5 1.5 0 01-3 0m3 0a1.5 1.5 0 00-3 0m3 0h6m-9 0H3.375a1.125 1.125 0 01-1.125-1.125V14.25m17.25 4.5a1.5 1.5 0 01-3 0m3 0a1.5 1.5 0 00-3 0m3 0h1.125c.621 0 1.129-.504 1.09-1.124a17.902 17.902 0 00-3.213-9.193 2.056 2.056 0 00-1.58-.86H14.25M16.5 18.75h-2.25m0-11.177v-.958c0-.568-.422-1.048-.987-1.106a48.554 48.554 0 00-10.026 0 1.106 1.106 0 00-.987 1.106v7.635m12-6.677v6.677m0 4.5v-4.5m0 0h-12" />
+          </svg>
+        </div>
+        <div class="trust-badge-text">
+          <div class="trust-badge-title font-bold text-sm">Free Shipping</div>
+          <div class="trust-badge-subtitle text-xs text-secondary">On orders over $99</div>
+        </div>
+      </div>
+
+      <!-- Secure Payment -->
+      <div class="trust-badge-item flex items-center gap-4 flex-1 justify-center border-r border-gray-100 last:border-0">
+        <div class="trust-badge-icon text-primary">
+          <!-- Shield Check -->
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" width="32" height="32">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+          </svg>
+        </div>
+        <div class="trust-badge-text">
+          <div class="trust-badge-title font-bold text-sm">Secure Payment</div>
+          <div class="trust-badge-subtitle text-xs text-secondary">100% secure checkout</div>
+        </div>
+      </div>
+
+      <!-- Easy Returns -->
+      <div class="trust-badge-item flex items-center gap-4 flex-1 justify-center border-r border-gray-100 last:border-0">
+        <div class="trust-badge-icon text-primary">
+          <!-- Arrow Rotate -->
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" width="32" height="32">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M16.023 9.348h4.992v-.001M2.985 19.644v-4.992m0 0h4.992m-4.993 0l3.181 3.183a8.25 8.25 0 0013.803-3.7M4.031 9.865a8.25 8.25 0 0113.803-3.7l3.181 3.182m0-4.991v4.99" />
+          </svg>
+        </div>
+        <div class="trust-badge-text">
+          <div class="trust-badge-title font-bold text-sm">Easy Returns</div>
+          <div class="trust-badge-subtitle text-xs text-secondary">30-day return policy</div>
+        </div>
+      </div>
+
+      <!-- 24/7 Support -->
+      <div class="trust-badge-item flex items-center gap-4 flex-1 justify-center border-r border-gray-100 last:border-0">
+        <div class="trust-badge-icon text-primary">
+          <!-- Clock -->
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" width="32" height="32">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 11-18 0 9 9 0 0118 0z" />
+          </svg>
+        </div>
+        <div class="trust-badge-text">
+          <div class="trust-badge-title font-bold text-sm">24/7 Support</div>
+          <div class="trust-badge-subtitle text-xs text-secondary">Dedicated support</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<style>
+  .mockup-trust-badges {
+    margin-top: -60px; /* Pull up to overlap hero exactly as shown in mockup */
+    position: relative;
+    z-index: 20;
+  }
+
+  .bg-white { background-color: #fff; }
+  .rounded-\[20px\] { border-radius: 20px; }
+  .shadow-soft { box-shadow: 0 10px 40px rgba(0, 0, 0, 0.08); }
+  .p-6 { padding: 1.5rem; }
+  .mx-auto { margin-left: auto; margin-right: auto; }
+  .border-gray-100 { border-color: #f3f4f6; }
+  .border-r { border-right-width: 1px; border-right-style: solid; }
+  .last\:border-0:last-child { border-right-width: 0; }
+  .text-primary { color: var(--color-primary); }
+  .text-secondary { color: #6b7280; }
+  .font-bold { font-weight: 700; }
+  .text-sm { font-size: 0.875rem; }
+  .text-xs { font-size: 0.75rem; }
+
+  @media screen and (max-width: 989px) {
+    .mockup-trust-badges__container { flex-direction: column; gap: 2rem; }
+    .trust-badge-item { border-right: none; border-bottom: 1px solid #f3f4f6; padding-bottom: 1.5rem; width: 100%; justify-content: flex-start; }
+    .trust-badge-item:last-child { border-bottom: none; padding-bottom: 0; }
+  }
+</style>
+
+{% schema %}
+{
+  "name": "Mockup Trust Badges",
+  "settings": [],
+  "presets": [
+    {
+      "name": "Mockup Trust Badges"
+    }
+  ]
+}
+{% endschema %}

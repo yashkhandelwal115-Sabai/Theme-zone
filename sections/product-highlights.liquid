@@ -1,0 +1,92 @@
+<div class="product-highlights color-scheme-{{ section.settings.color_scheme }} py-8">
+  <div class="page-width">
+    {%- if section.settings.title != blank -%}
+      <h2 class="section-header h2">{{ section.settings.title | escape }}</h2>
+    {%- endif -%}
+
+    <div class="grid grid-cols-4">
+      {%- for block in section.blocks -%}
+        <div class="highlight-item text-center" {{ block.shopify_attributes }}>
+          <div class="highlight-item__icon mb-4">
+            {%- if block.settings.icon != blank -%}
+              <img src="{{ block.settings.icon | image_url: width: 80 }}" alt="" loading="lazy" width="80" height="80">
+            {%- else -%}
+              <div class="placeholder-icon"></div>
+            {%- endif -%}
+          </div>
+          <h3 class="h4 mb-0">{{ block.settings.heading | escape }}</h3>
+          <p class="text-small">{{ block.settings.text | escape }}</p>
+        </div>
+      {%- endfor -%}
+    </div>
+  </div>
+</div>
+
+<style>
+  .product-highlights { padding-top: 4rem; padding-bottom: 4rem; }
+  .highlight-item { padding: 2rem; background: var(--color-scheme-2-bg); border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.05); }
+  .highlight-item__icon { width: 80px; height: 80px; margin: 0 auto; display: flex; align-items: center; justify-content: center; }
+  .placeholder-icon { width: 60px; height: 60px; background: #e0e0e0; border-radius: 50%; }
+</style>
+
+{% schema %}
+{
+  "name": "Product Highlights",
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "default": "Why Choose Us",
+      "label": "Heading"
+    },
+    {
+      "type": "select",
+      "id": "color_scheme",
+      "options": [
+        { "value": "1", "label": "Electric Blue" },
+        { "value": "2", "label": "Arctic White" },
+        { "value": "3", "label": "Carbon Black" },
+        { "value": "4", "label": "Neon Green" }
+      ],
+      "default": "2",
+      "label": "Color scheme"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "highlight",
+      "name": "Highlight",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "icon",
+          "label": "Icon"
+        },
+        {
+          "type": "text",
+          "id": "heading",
+          "default": "Fast Performance",
+          "label": "Heading"
+        },
+        {
+          "type": "text",
+          "id": "text",
+          "default": "Experience lightning fast speeds with the latest tech.",
+          "label": "Description"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Product Highlights",
+      "blocks": [
+        { "type": "highlight" },
+        { "type": "highlight" },
+        { "type": "highlight" },
+        { "type": "highlight" }
+      ]
+    }
+  ]
+}
+{% endschema %}

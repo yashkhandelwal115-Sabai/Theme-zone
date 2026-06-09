@@ -1,0 +1,44 @@
+{
+  "current": {
+    "color_scheme_1_bg": "#0A84FF",
+    "color_scheme_1_fg": "#FFFFFF",
+    "color_scheme_2_bg": "#FFFFFF",
+    "color_scheme_2_fg": "#111111",
+    "color_scheme_3_bg": "#111111",
+    "color_scheme_3_fg": "#FFFFFF",
+    "color_scheme_4_bg": "#39FF14",
+    "color_scheme_4_fg": "#111111"
+  },
+  "presets": {
+    "ThemeZone Electronics": {
+      "color_scheme_1_bg": "#0A84FF",
+      "color_scheme_1_fg": "#FFFFFF",
+      "color_scheme_2_bg": "#FFFFFF",
+      "color_scheme_2_fg": "#111111",
+      "color_scheme_3_bg": "#111111",
+      "color_scheme_3_fg": "#FFFFFF",
+      "color_scheme_4_bg": "#39FF14",
+      "color_scheme_4_fg": "#111111"
+    },
+    "ThemeZone Gaming": {
+      "color_scheme_1_bg": "#FF003C",
+      "color_scheme_1_fg": "#FFFFFF",
+      "color_scheme_2_bg": "#111111",
+      "color_scheme_2_fg": "#39FF14",
+      "color_scheme_3_bg": "#000000",
+      "color_scheme_3_fg": "#FFFFFF",
+      "color_scheme_4_bg": "#39FF14",
+      "color_scheme_4_fg": "#000000"
+    },
+    "ThemeZone Smart Home": {
+      "color_scheme_1_bg": "#00C853",
+      "color_scheme_1_fg": "#FFFFFF",
+      "color_scheme_2_bg": "#FAFAFA",
+      "color_scheme_2_fg": "#333333",
+      "color_scheme_3_bg": "#212121",
+      "color_scheme_3_fg": "#FFFFFF",
+      "color_scheme_4_bg": "#00B0FF",
+      "color_scheme_4_fg": "#FFFFFF"
+    }
+  }
+}

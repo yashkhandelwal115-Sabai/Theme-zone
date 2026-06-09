@@ -1,0 +1,139 @@
+<div class="customer order page-width py-8">
+  <div class="flex justify-between align-center mb-8">
+    <h1 class="h2">Order {{ order.name }}</h1>
+    <a href="{{ routes.account_url }}" class="button button--secondary">Return to Account Details</a>
+  </div>
+
+  <p class="mb-4">Placed on {{ order.created_at | time_tag: format: 'date_at_time' }}</p>
+
+  {%- if order.cancelled -%}
+    <div class="order-cancelled mb-8 p-4 border rounded color-red">
+      <p class="font-bold">Order Cancelled on {{ order.cancelled_at | time_tag: format: 'date_at_time' }}</p>
+      <p>Reason: {{ order.cancel_reason_label }}</p>
+    </div>
+  {%- endif -%}
+
+  <table class="w-100 mb-8 border rounded">
+    <thead>
+      <tr>
+        <th class="text-left">Product</th>
+        <th class="text-left">SKU</th>
+        <th class="text-left">Price</th>
+        <th class="text-center">Quantity</th>
+        <th class="text-right">Total</th>
+      </tr>
+    </thead>
+    <tbody>
+      {%- for line_item in order.line_items -%}
+        <tr>
+          <td data-label="Product">
+            <a href="{{ line_item.url }}" class="underlined-link font-bold">{{ line_item.title }}</a>
+            {%- if line_item.selling_plan_allocation -%}
+              <p class="text-sm">{{ line_item.selling_plan_allocation.selling_plan.name }}</p>
+            {%- endif -%}
+            {%- if line_item.line_level_discount_allocations != blank -%}
+              <ul class="list-unstyled text-sm color-red">
+                {%- for discount_allocation in line_item.line_level_discount_allocations -%}
+                  <li>{{ discount_allocation.discount_application.title }} (-{{ discount_allocation.amount | money }})</li>
+                {%- endfor -%}
+              </ul>
+            {%- endif -%}
+          </td>
+          <td data-label="SKU">{{ line_item.sku }}</td>
+          <td data-label="Price">
+            {%- if line_item.original_price != line_item.final_price -%}
+              <s>{{ line_item.original_price | money }}</s><br>
+              <span class="color-red">{{ line_item.final_price | money }}</span>
+            {%- else -%}
+              {{ line_item.original_price | money }}
+            {%- endif -%}
+            {%- if line_item.unit_price_measurement -%}
+              <div class="text-sm mt-2">
+                {{ line_item.unit_price | money }} / 
+                {%- if line_item.unit_price_measurement.reference_value != 1 -%}
+                  {{ line_item.unit_price_measurement.reference_value }}
+                {%- endif -%}
+                {{ line_item.unit_price_measurement.reference_unit }}
+              </div>
+            {%- endif -%}
+          </td>
+          <td data-label="Quantity" class="text-center">{{ line_item.quantity }}</td>
+          <td data-label="Total" class="text-right">
+            {%- if line_item.original_line_price != line_item.final_line_price -%}
+              <s>{{ line_item.original_line_price | money }}</s><br>
+              <span class="color-red">{{ line_item.final_line_price | money }}</span>
+            {%- else -%}
+              {{ line_item.original_line_price | money }}
+            {%- endif -%}
+          </td>
+        </tr>
+      {%- endfor -%}
+    </tbody>
+    <tfoot>
+      <tr>
+        <td colspan="4" class="text-right font-bold">Subtotal</td>
+        <td class="text-right">{{ order.line_items_subtotal_price | money }}</td>
+      </tr>
+      {%- if order.cart_level_discount_applications != blank -%}
+        {%- for discount_application in order.cart_level_discount_applications -%}
+          <tr>
+            <td colspan="4" class="text-right color-red">Discount ({{ discount_application.title }})</td>
+            <td class="text-right color-red">-{{ discount_application.total_allocated_amount | money }}</td>
+          </tr>
+        {%- endfor -%}
+      {%- endif -%}
+      {%- for shipping_method in order.shipping_methods -%}
+        <tr>
+          <td colspan="4" class="text-right">Shipping ({{ shipping_method.title }})</td>
+          <td class="text-right">{{ shipping_method.price | money }}</td>
+        </tr>
+      {%- endfor -%}
+      {%- for tax_line in order.tax_lines -%}
+        <tr>
+          <td colspan="4" class="text-right">Tax ({{ tax_line.title }} {{ tax_line.rate | times: 100 }}%)</td>
+          <td class="text-right">{{ tax_line.price | money }}</td>
+        </tr>
+      {%- endfor -%}
+      <tr>
+        <td colspan="4" class="text-right font-bold h4">Total</td>
+        <td class="text-right font-bold h4">{{ order.total_price | money_with_currency }}</td>
+      </tr>
+    </tfoot>
+  </table>
+
+  <div class="grid grid-cols-2 gap-8">
+    <div>
+      <h2 class="h3 mb-4">Billing Address</h2>
+      <p class="font-bold mb-2">Payment Status: {{ order.financial_status_label }}</p>
+      <div class="p-4 border rounded">
+        {{ order.billing_address | format_address }}
+      </div>
+    </div>
+    <div>
+      <h2 class="h3 mb-4">Shipping Address</h2>
+      <p class="font-bold mb-2">Fulfillment Status: {{ order.fulfillment_status_label }}</p>
+      <div class="p-4 border rounded">
+        {{ order.shipping_address | format_address }}
+      </div>
+    </div>
+  </div>
+</div>
+
+<style>
+  .w-100 { width: 100%; }
+  .p-4 { padding: 1rem; }
+  .border { border: 1px solid rgba(0,0,0,0.1); }
+  .rounded { border-radius: 8px; }
+  .gap-8 { gap: 2rem; }
+  .color-red { color: #E32C2B; }
+  table th, table td { padding: 1rem; border-bottom: 1px solid rgba(0,0,0,0.05); }
+  table tfoot td { border-bottom: none; }
+  table tfoot tr:first-child td { border-top: 2px solid rgba(0,0,0,0.1); }
+  @media screen and (max-width: 749px) {
+    .order .grid-cols-2 { grid-template-columns: 1fr; }
+    table thead { display: none; }
+    table tbody tr { display: block; padding: 1rem; border-bottom: 2px solid rgba(0,0,0,0.1); }
+    table tbody td { display: flex; justify-content: space-between; border-bottom: none; padding: 0.5rem 0; text-align: right; }
+    table tbody td::before { content: attr(data-label); font-weight: bold; text-align: left; }
+  }
+</style>

@@ -1,0 +1,276 @@
+{%- if section.settings.enable_sticky_header -%}
+  <script src="{{ 'sticky-header.js' | asset_url }}" defer="defer"></script>
+{%- endif -%}
+
+<div class="mockup-header-wrapper {% if section.settings.enable_sticky_header %}is-sticky{% endif %}">
+  
+  <!-- Top Bar -->
+  <div class="header-topbar py-2 text-small">
+    <div class="page-width flex justify-center items-center relative">
+      <div class="header-topbar__center text-center w-100 font-bold">
+        Free shipping on all orders over $99 <span style="opacity: 0.7; margin: 0 10px;">•</span> Limited time offer!
+      </div>
+      <div class="header-topbar__right flex items-center gap-6 absolute right-0 pr-8">
+        <a href="/account" class="header-topbar__link">Track Order</a>
+        <a href="/pages/contact" class="header-topbar__link">Support</a>
+        <div class="header-localization flex gap-2 cursor-pointer items-center">
+          EN {% render 'icon', icon: 'chevron-down' %}
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Main Header & Navigation -->
+  <header class="header-main pt-6 pb-0">
+    <div class="page-width">
+      
+      <div class="flex justify-between items-center mb-6">
+        <!-- Logo -->
+        <h1 class="header__heading m-0">
+          <a href="{{ routes.root_url }}" class="header__heading-link flex items-center text-white" style="text-decoration: none;">
+            {%- if section.settings.logo != blank -%}
+              <img src="{{ section.settings.logo | image_url: width: 250 }}" alt="{{ shop.name }}" width="{{ section.settings.logo_width }}" height="auto" loading="lazy">
+            {%- else -%}
+              <span class="h2 m-0" style="color: white; font-weight: 700; font-size: 28px;">Theme<span class="color-primary">Zone</span></span>
+            {%- endif -%}
+          </a>
+        </h1>
+
+        <!-- Search Bar -->
+        <div class="header__search hidden-mobile flex-1 mx-8 max-w-[600px]">
+          <form action="{{ routes.search_url }}" method="get" role="search" class="search-form flex">
+            <div class="search-category-dropdown flex items-center gap-2">
+              All Categories {% render 'icon', icon: 'chevron-down' %}
+            </div>
+            <input class="search-form__input field__input" type="search" name="q" value="{{ search.terms | escape }}" placeholder="Search for products...">
+            <button class="search-form__button button button--primary" type="submit" aria-label="Search">
+              {% render 'icon', icon: 'search' %}
+            </button>
+          </form>
+        </div>
+
+        <!-- Icons -->
+        <div class="header__icons flex items-center gap-8 text-white">
+          
+          <a href="#compare" class="header__icon-wrapper link text-center" data-compare-drawer-trigger>
+            <div class="icon-container mx-auto">
+              {% render 'icon', icon: 'compare' %}
+            </div>
+            <span class="icon-label block text-xs mt-1">Compare</span>
+          </a>
+
+          <a href="{%- if customer -%}{{ routes.account_url }}{%- else -%}{{ routes.account_login_url }}{%- endif -%}" class="header__icon-wrapper link text-center hidden-mobile">
+            <div class="icon-container mx-auto">
+              {% render 'icon', icon: 'user' %}
+            </div>
+            <span class="icon-label block text-xs mt-1">Account</span>
+          </a>
+
+          <a href="{{ routes.cart_url }}" class="header__icon-wrapper link text-center relative" id="cart-icon-bubble">
+            <div class="icon-container mx-auto">
+              {% render 'icon', icon: 'cart' %}
+            </div>
+            <span class="icon-label block text-xs mt-1">Cart</span>
+            {%- if cart != empty -%}
+              <div class="cart-badge flex items-center justify-center">
+                <span>{{ cart.item_count }}</span>
+              </div>
+            {%- endif -%}
+          </a>
+
+        </div>
+      </div>
+
+      <!-- Navigation -->
+      <div class="header-nav flex items-center justify-between border-t border-gray-800">
+        <div class="flex items-center gap-8 w-100">
+          
+          <div class="categories-dropdown-menu flex items-center gap-2 py-4 cursor-pointer text-white font-bold">
+            {% render 'icon', icon: 'menu' %}
+            Categories
+            {% render 'icon', icon: 'chevron-down' %}
+          </div>
+
+          <ul class="list-menu list-menu--inline flex-1" role="list">
+            {%- for link in section.settings.menu.links -%}
+              <li>
+                <a href="{{ link.url }}" class="list-menu__item link text-white text-sm {% if link.current %}active{% endif %}"{% if link.current %} aria-current="page"{% endif %}>
+                  <span>{{ link.title | escape }}</span>
+                </a>
+              </li>
+            {%- endfor -%}
+          </ul>
+        </div>
+      </div>
+
+    </div>
+  </header>
+</div>
+
+<style>
+  .mockup-header-wrapper {
+    background-color: var(--color-secondary);
+    position: relative;
+    z-index: 100;
+  }
+  
+  .mockup-header-wrapper.is-sticky {
+    position: sticky;
+    top: 0;
+  }
+
+  .header-topbar {
+    background-color: var(--color-primary);
+    color: var(--color-surface);
+  }
+
+  .header-topbar a {
+    color: var(--color-surface);
+    text-decoration: none;
+  }
+
+  .header-topbar a:hover {
+    text-decoration: underline;
+  }
+
+  .header-main {
+    background-color: var(--color-secondary);
+  }
+
+  /* Search Bar */
+  .search-form {
+    display: flex;
+    background: #111827; /* Darker than header bg */
+    border-radius: 8px;
+    overflow: hidden;
+    border: 1px solid rgba(255,255,255,0.1);
+  }
+
+  .search-category-dropdown {
+    background: #1F2937;
+    color: #9ca3af;
+    padding: 0 1rem;
+    font-size: 0.875rem;
+    border-right: 1px solid rgba(255,255,255,0.1);
+  }
+
+  .search-category-dropdown svg { width: 14px; height: 14px; }
+
+  .search-form__input {
+    background: transparent;
+    border: none;
+    color: #fff;
+    padding: 0.75rem 1rem;
+    flex: 1;
+  }
+
+  .search-form__input:focus { outline: none; box-shadow: none; }
+  .search-form__input::placeholder { color: #6b7280; }
+
+  .search-form__button {
+    border-radius: 0;
+    padding: 0 1.5rem;
+  }
+
+  /* Icons */
+  .header__icon-wrapper {
+    color: #fff;
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+
+  .header__icon-wrapper:hover {
+    color: var(--color-primary);
+  }
+
+  .icon-container svg {
+    width: 24px; height: 24px;
+  }
+
+  .cart-badge {
+    position: absolute;
+    top: -5px; right: 5px;
+    background: var(--color-primary);
+    color: #fff;
+    font-size: 10px;
+    font-weight: bold;
+    width: 16px; height: 16px;
+    border-radius: 50%;
+  }
+
+  /* Navigation */
+  .border-gray-800 { border-color: #1f2937; }
+  .border-t { border-top-width: 1px; border-top-style: solid; }
+
+  .categories-dropdown-menu svg { width: 16px; height: 16px; }
+
+  .list-menu--inline {
+    display: flex; gap: 2rem; list-style: none; padding: 0; margin: 0 0 0 2rem;
+  }
+
+  .list-menu__item {
+    text-decoration: none;
+    font-weight: 500;
+    padding: 1.25rem 0;
+    display: inline-block;
+    position: relative;
+    color: #d1d5db;
+  }
+
+  .list-menu__item:hover, .list-menu__item.active {
+    color: #fff;
+  }
+
+  .list-menu__item.active::after {
+    content: '';
+    position: absolute;
+    bottom: 0; left: 0; width: 100%; height: 3px;
+    background: var(--color-primary);
+  }
+
+  /* Utilities */
+  .max-w-\[600px\] { max-width: 600px; }
+  .pr-8 { padding-right: 2rem; }
+  .pt-6 { padding-top: 1.5rem; }
+  .pb-0 { padding-bottom: 0; }
+  .text-white { color: #fff; }
+  .text-xs { font-size: 0.75rem; }
+  .text-sm { font-size: 0.875rem; }
+  .block { display: block; }
+  .cursor-pointer { cursor: pointer; }
+</style>
+
+{% schema %}
+{
+  "name": "Header",
+  "settings": [
+    {
+      "type": "image_picker",
+      "id": "logo",
+      "label": "Logo image"
+    },
+    {
+      "type": "range",
+      "id": "logo_width",
+      "min": 50,
+      "max": 250,
+      "step": 10,
+      "default": 150,
+      "unit": "px",
+      "label": "Custom logo width"
+    },
+    {
+      "type": "link_list",
+      "id": "menu",
+      "default": "main-menu",
+      "label": "Menu"
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_sticky_header",
+      "default": true,
+      "label": "Enable sticky header"
+    }
+  ]
+}
+{% endschema %}

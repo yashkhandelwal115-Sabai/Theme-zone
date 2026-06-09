@@ -1,0 +1,86 @@
+<div class="related-products page-width py-8" data-url="{{ routes.product_recommendations_url }}?section_id={{ section.id }}&product_id={{ product.id }}&limit={{ section.settings.products_to_show }}">
+  {%- if recommendations.performed and recommendations.products_count > 0 -%}
+    <h2 class="h2 text-center mb-8">{{ section.settings.heading | escape }}</h2>
+    <div class="grid grid-cols-{{ section.settings.columns_desktop }}">
+      {%- for product in recommendations.products -%}
+        {% render 'product-card', product: product, show_vendor: true %}
+      {%- endfor -%}
+    </div>
+  {%- endif -%}
+</div>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    const section = document.querySelector('.related-products');
+    if (!section) return;
+
+    fetch(section.dataset.url)
+      .then(response => response.text())
+      .then(text => {
+        const html = document.createElement('div');
+        html.innerHTML = text;
+        const recommendations = html.querySelector('.related-products');
+
+        if (recommendations && recommendations.innerHTML.trim().length) {
+          section.innerHTML = recommendations.innerHTML;
+        }
+      })
+      .catch(e => {
+        console.error(e);
+      });
+  });
+</script>
+
+<style>
+  @media screen and (max-width: 749px) {
+    .related-products .grid { grid-template-columns: repeat({{ section.settings.columns_mobile }}, 1fr); }
+  }
+</style>
+
+{% schema %}
+{
+  "name": "Related products",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "default": "You may also like",
+      "label": "Heading"
+    },
+    {
+      "type": "range",
+      "id": "products_to_show",
+      "min": 2,
+      "max": 10,
+      "step": 1,
+      "default": 4,
+      "label": "Maximum products to show"
+    },
+    {
+      "type": "range",
+      "id": "columns_desktop",
+      "min": 2,
+      "max": 5,
+      "step": 1,
+      "default": 4,
+      "label": "Number of columns on desktop"
+    },
+    {
+      "type": "select",
+      "id": "columns_mobile",
+      "options": [
+        { "value": "1", "label": "1 column" },
+        { "value": "2", "label": "2 columns" }
+      ],
+      "default": "2",
+      "label": "Number of columns on mobile"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Related products"
+    }
+  ],
+  "templates": ["product"]
+}
+{% endschema %}

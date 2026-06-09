@@ -1,0 +1,85 @@
+<div class="main-blog page-width py-8">
+  <h1 class="h1 text-center mb-8">{{ blog.title | escape }}</h1>
+
+  {%- paginate blog.articles by section.settings.articles_per_page -%}
+    <div class="grid grid-cols-{{ section.settings.columns_desktop }}">
+      {%- for article in blog.articles -%}
+        <div class="blog-article-card border rounded p-4">
+          {%- if article.image -%}
+            <a href="{{ article.url }}">
+              <img src="{{ article.image | image_url: width: 600 }}" alt="{{ article.image.alt | escape }}" loading="lazy" width="600" height="auto" class="w-100 rounded mb-4">
+            </a>
+          {%- endif -%}
+          <h2 class="h3 mb-2"><a href="{{ article.url }}" class="color-inherit no-underline">{{ article.title | escape }}</a></h2>
+          <div class="article-meta text-sm mb-4">
+            {%- if section.settings.show_date -%}
+              <span>{{ article.published_at | time_tag: format: 'date' }}</span>
+            {%- endif -%}
+            {%- if section.settings.show_author -%}
+              <span class="ml-2">by {{ article.author }}</span>
+            {%- endif -%}
+          </div>
+          <p class="mb-4">{{ article.excerpt_or_content | strip_html | truncatewords: 30 }}</p>
+          <a href="{{ article.url }}" class="button button--secondary button--small mt-auto self-start">Read more</a>
+        </div>
+      {%- endfor -%}
+    </div>
+
+    {%- if paginate.pages > 1 -%}
+      <div class="pagination text-center mt-8">
+        {{ paginate | default_pagination }}
+      </div>
+    {%- endif -%}
+  {%- endpaginate -%}
+</div>
+
+<style>
+  .blog-article-card { display: flex; flex-direction: column; }
+  .article-meta { color: rgba(0,0,0,0.6); }
+  .mt-auto { margin-top: auto; }
+  .self-start { align-self: flex-start; }
+  .color-inherit { color: inherit; }
+  .no-underline { text-decoration: none; }
+  .no-underline:hover { text-decoration: underline; }
+  @media screen and (max-width: 749px) {
+    .main-blog .grid { grid-template-columns: 1fr; }
+  }
+</style>
+
+{% schema %}
+{
+  "name": "Blog posts",
+  "settings": [
+    {
+      "type": "range",
+      "id": "articles_per_page",
+      "min": 6,
+      "max": 24,
+      "step": 3,
+      "default": 12,
+      "label": "Posts per page"
+    },
+    {
+      "type": "range",
+      "id": "columns_desktop",
+      "min": 2,
+      "max": 4,
+      "step": 1,
+      "default": 3,
+      "label": "Columns on desktop"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_date",
+      "default": true,
+      "label": "Show date"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_author",
+      "default": false,
+      "label": "Show author"
+    }
+  ]
+}
+{% endschema %}

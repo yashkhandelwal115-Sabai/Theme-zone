@@ -1,0 +1,13 @@
+{
+  "name": "Contact",
+  "wrapper": "main",
+  "sections": {
+    "main": {
+      "type": "contact-form",
+      "settings": {}
+    }
+  },
+  "order": [
+    "main"
+  ]
+}

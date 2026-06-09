@@ -1,0 +1,69 @@
+<div class="mockup-cross-sell py-12 animate-fade-up">
+  <div class="page-width">
+    
+    <h2 class="h2 text-center mb-10 font-bold">{{ section.settings.heading | escape }}</h2>
+
+    {%- assign collection = section.settings.collection -%}
+    
+    <div class="grid grid-cols-2 md-grid-cols-6 gap-6">
+      {%- if collection != blank and collection.products_count > 0 -%}
+        {%- for product in collection.products limit: section.settings.products_to_show -%}
+          {% render 'product-card', product: product, show_vendor: false %}
+        {%- endfor -%}
+      {%- else -%}
+        {%- for i in (1..6) -%}
+          <div class="product-card card relative group">
+            <a href="{{ routes.all_products_collection_url }}" class="product-card__image-wrapper block relative overflow-hidden bg-background" style="aspect-ratio: 1/1;">
+              <img src="{{ 'mockup-headphones.jpg' | asset_url }}" alt="Recommended Product" class="product-card__image absolute inset-0 w-full h-full object-contain p-4 transition-transform duration-500 group-hover:scale-110">
+            </a>
+            <div class="product-card__content p-4 flex flex-col flex-grow">
+              <h3 class="product-card__title h6 mb-2 line-clamp-2">
+                <a href="{{ routes.all_products_collection_url }}" class="text-primary-text hover:text-primary">Premium Wireless Headphones</a>
+              </h3>
+              <div class="product-card__price mt-auto mb-4">
+                <span class="price-item price-item--regular font-bold">$299.00</span>
+              </div>
+              <button class="button button--full-width button--secondary product-card__quick-add mt-auto">
+                Quick Add
+              </button>
+            </div>
+          </div>
+        {%- endfor -%}
+      {%- endif -%}
+    </div>
+
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Cart Cross-Sell",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "default": "You May Also Like",
+      "label": "Heading"
+    },
+    {
+      "type": "collection",
+      "id": "collection",
+      "label": "Collection"
+    },
+    {
+      "type": "range",
+      "id": "products_to_show",
+      "min": 4,
+      "max": 12,
+      "step": 2,
+      "default": 6,
+      "label": "Maximum products to show"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Cart Cross-Sell"
+    }
+  ]
+}
+{% endschema %}

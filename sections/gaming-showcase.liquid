@@ -1,0 +1,86 @@
+<div class="gaming-showcase color-scheme-{{ section.settings.color_scheme }} py-8">
+  <div class="page-width">
+    <div class="grid grid-cols-2 align-center">
+      <div class="gaming-showcase__content pr-8">
+        <h2 class="h1">{{ section.settings.heading | escape }}</h2>
+        <p class="h4 mt-4 mb-8">{{ section.settings.text | escape }}</p>
+        {%- if section.settings.button_label != blank -%}
+          <a href="{{ section.settings.button_link }}" class="button button--primary">{{ section.settings.button_label | escape }}</a>
+        {%- endif -%}
+      </div>
+      <div class="gaming-showcase__media">
+        {%- if section.settings.image != blank -%}
+          <img src="{{ section.settings.image | image_url: width: 800 }}" alt="{{ section.settings.heading }}" loading="lazy" width="800" height="auto" class="rounded-xl shadow-lg">
+        {%- else -%}
+          {{ 'collection-2' | placeholder_svg_tag: 'placeholder-svg rounded-xl shadow-lg' }}
+        {%- endif -%}
+      </div>
+    </div>
+  </div>
+</div>
+
+<style>
+  .gaming-showcase { padding-top: 6rem; padding-bottom: 6rem; background-color: var(--color-scheme-3-bg); color: var(--color-scheme-3-fg); }
+  .align-center { align-items: center; }
+  .pr-8 { padding-right: 4rem; }
+  .rounded-xl { border-radius: 16px; overflow: hidden; display: block; }
+  .shadow-lg { box-shadow: 0 20px 40px rgba(0,0,0,0.3); }
+  .gaming-showcase__media img, .gaming-showcase__media svg { width: 100%; height: auto; }
+  @media screen and (max-width: 749px) {
+    .gaming-showcase .grid-cols-2 { grid-template-columns: 1fr; gap: 3rem; }
+    .pr-8 { padding-right: 0; }
+  }
+</style>
+
+{% schema %}
+{
+  "name": "Gaming Showcase",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "default": "Level Up Your Setup",
+      "label": "Heading"
+    },
+    {
+      "type": "textarea",
+      "id": "text",
+      "default": "Experience ultimate performance with our latest gaming gear.",
+      "label": "Text"
+    },
+    {
+      "type": "text",
+      "id": "button_label",
+      "default": "Shop Gaming",
+      "label": "Button label"
+    },
+    {
+      "type": "url",
+      "id": "button_link",
+      "label": "Button link"
+    },
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Image"
+    },
+    {
+      "type": "select",
+      "id": "color_scheme",
+      "options": [
+        { "value": "1", "label": "Electric Blue" },
+        { "value": "2", "label": "Arctic White" },
+        { "value": "3", "label": "Carbon Black" },
+        { "value": "4", "label": "Neon Green" }
+      ],
+      "default": "3",
+      "label": "Color scheme"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Gaming Showcase"
+    }
+  ]
+}
+{% endschema %}

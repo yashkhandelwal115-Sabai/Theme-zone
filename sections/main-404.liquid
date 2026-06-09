@@ -1,0 +1,92 @@
+{{ 'page-404.css' | asset_url | stylesheet_tag }}
+
+<div class="tz-page-404">
+  
+  <div class="tz-page-404__decor"></div>
+
+  <div class="tz-page-404__container">
+    
+    <!-- Hero Illustration -->
+    <div class="tz-page-404__illustration">
+      <div class="tz-page-404__glow"></div>
+      <svg class="tz-page-404__svg" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path>
+      </svg>
+      <div class="tz-page-404__text-bg">404</div>
+    </div>
+
+    <!-- Copy -->
+    <h1 class="tz-page-404__title">
+      {{ section.settings.title | escape }}
+    </h1>
+    <p class="tz-page-404__subtitle">
+      {{ section.settings.subtitle | escape }}
+    </p>
+
+    <!-- Search Bar -->
+    {%- if section.settings.show_search -%}
+      <div class="tz-page-404__search">
+        <form action="{{ routes.search_url }}" method="get" role="search" class="tz-page-404__search-form">
+          <input type="search" name="q" value="{{ search.terms | escape }}" placeholder="Search for products, categories, or accessories..." class="tz-page-404__search-input">
+          <svg class="tz-page-404__search-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
+          <button type="submit" class="tz-page-404__search-btn">
+            Search
+          </button>
+        </form>
+      </div>
+    {%- endif -%}
+
+    <!-- Popular Categories -->
+    <div class="tz-page-404__categories">
+      <h2 class="tz-page-404__cat-title">Popular Categories</h2>
+      <div class="tz-page-404__cat-grid">
+        {%- assign default_cats = "Smartphones,Laptops,Tablets,Audio,Gaming,Accessories" | split: "," -%}
+        {%- for cat in default_cats -%}
+          <a href="/collections/{{ cat | handleize }}" class="tz-card-category">
+            <div class="tz-card-category__icon">
+              <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
+            </div>
+            <span class="tz-card-category__name">{{ cat }}</span>
+          </a>
+        {%- endfor -%}
+      </div>
+    </div>
+
+    <!-- Actions -->
+    <div class="tz-page-404__actions">
+      <a href="{{ routes.all_products_collection_url }}" class="tz-btn tz-btn--primary">
+        Continue Shopping
+      </a>
+      <a href="{{ routes.root_url }}" class="tz-btn tz-btn--secondary">
+        Return Home
+      </a>
+    </div>
+
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "404 Error Page",
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Heading",
+      "default": "Oops! We lost signal."
+    },
+    {
+      "type": "text",
+      "id": "subtitle",
+      "label": "Subheading",
+      "default": "The page you're looking for doesn't exist or has been moved."
+    },
+    {
+      "type": "checkbox",
+      "id": "show_search",
+      "label": "Show search bar",
+      "default": true
+    }
+  ]
+}
+{% endschema %}

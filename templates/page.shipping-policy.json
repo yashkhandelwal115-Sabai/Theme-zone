@@ -1,0 +1,17 @@
+{
+  "name": "Shipping Policy",
+  "wrapper": "main",
+  "sections": {
+    "main": {
+      "type": "policy-layout",
+      "settings": {
+        "title": "Shipping & Delivery Policy",
+        "last_updated": "October 2023",
+        "show_sidebar": true
+      }
+    }
+  },
+  "order": [
+    "main"
+  ]
+}

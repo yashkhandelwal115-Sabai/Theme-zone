@@ -1,0 +1,17 @@
+{
+  "name": "Refund Policy",
+  "wrapper": "main",
+  "sections": {
+    "main": {
+      "type": "policy-layout",
+      "settings": {
+        "title": "Returns & Refunds Policy",
+        "last_updated": "October 2023",
+        "show_sidebar": true
+      }
+    }
+  },
+  "order": [
+    "main"
+  ]
+}

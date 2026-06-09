@@ -1,0 +1,87 @@
+<div class="brand-showcase color-scheme-{{ section.settings.color_scheme }} py-8">
+  <div class="page-width text-center">
+    {%- if section.settings.title != blank -%}
+      <h2 class="section-header h2">{{ section.settings.title | escape }}</h2>
+    {%- endif -%}
+
+    <div class="brand-grid {% if section.settings.grayscale %}brand-grid--grayscale{% endif %}">
+      {%- for block in section.blocks -%}
+        <div class="brand-item" {{ block.shopify_attributes }}>
+          {%- if block.settings.image != blank -%}
+            <img src="{{ block.settings.image | image_url: width: 160 }}" alt="{{ block.settings.image.alt }}" loading="lazy" width="160" height="auto">
+          {%- else -%}
+            <div class="placeholder-brand">{{ 'image' | placeholder_svg_tag }}</div>
+          {%- endif -%}
+        </div>
+      {%- endfor -%}
+    </div>
+  </div>
+</div>
+
+<style>
+  .brand-showcase { padding-top: 4rem; padding-bottom: 4rem; border-top: 1px solid rgba(0,0,0,0.05); border-bottom: 1px solid rgba(0,0,0,0.05); }
+  .brand-grid { display: flex; flex-wrap: wrap; justify-content: center; gap: 3rem; align-items: center; }
+  .brand-item img { max-width: 160px; height: auto; opacity: 0.7; transition: opacity 0.3s ease; filter: none; }
+  .brand-item img:hover { opacity: 1; }
+  .brand-grid--grayscale img { filter: grayscale(100%); }
+  .brand-grid--grayscale img:hover { filter: grayscale(0%); opacity: 1; }
+  .placeholder-brand { width: 120px; height: 60px; background: #f4f4f4; display: flex; align-items: center; justify-content: center; opacity: 0.5; color: #999; }
+</style>
+
+{% schema %}
+{
+  "name": "Brand Showcase",
+  "max_blocks": 20,
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "default": "Top Brands",
+      "label": "Heading"
+    },
+    {
+      "type": "checkbox",
+      "id": "grayscale",
+      "default": true,
+      "label": "Grayscale images"
+    },
+    {
+      "type": "select",
+      "id": "color_scheme",
+      "options": [
+        { "value": "1", "label": "Electric Blue" },
+        { "value": "2", "label": "Arctic White" },
+        { "value": "3", "label": "Carbon Black" },
+        { "value": "4", "label": "Neon Green" }
+      ],
+      "default": "2",
+      "label": "Color scheme"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "brand",
+      "name": "Brand",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Brand Logo"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Brand Showcase",
+      "blocks": [
+        { "type": "brand" },
+        { "type": "brand" },
+        { "type": "brand" },
+        { "type": "brand" },
+        { "type": "brand" }
+      ]
+    }
+  ]
+}
+{% endschema %}

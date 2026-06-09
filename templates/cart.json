@@ -1,0 +1,18 @@
+{
+  "name": "Cart",
+  "wrapper": "main",
+  "sections": {
+    "main": {
+      "type": "main-cart",
+      "settings": {}
+    },
+    "cross_sell": {
+      "type": "cart-cross-sell",
+      "settings": {}
+    }
+  },
+  "order": [
+    "main",
+    "cross_sell"
+  ]
+}

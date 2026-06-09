@@ -1,0 +1,63 @@
+<div class="customer account page-width py-8">
+  <div class="flex justify-between align-center mb-8">
+    <h1 class="h2">Account</h1>
+    <a href="{{ routes.account_logout_url }}" class="button button--secondary">Log out</a>
+  </div>
+
+  <div class="grid grid-cols-2 gap-8">
+    <div>
+      <h2 class="h3 mb-4">Order history</h2>
+      {% paginate customer.orders by 20 %}
+        {%- if customer.orders.size > 0 -%}
+          <table class="w-100">
+            <thead>
+              <tr>
+                <th class="text-left">Order</th>
+                <th class="text-left">Date</th>
+                <th class="text-left">Payment Status</th>
+                <th class="text-left">Fulfillment Status</th>
+                <th class="text-right">Total</th>
+              </tr>
+            </thead>
+            <tbody>
+              {%- for order in customer.orders -%}
+                <tr>
+                  <td><a href="{{ order.customer_url }}" class="underlined-link">{{ order.name }}</a></td>
+                  <td>{{ order.created_at | time_tag: format: 'date' }}</td>
+                  <td>{{ order.financial_status_label }}</td>
+                  <td>{{ order.fulfillment_status_label }}</td>
+                  <td class="text-right">{{ order.total_price | money_with_currency }}</td>
+                </tr>
+              {%- endfor -%}
+            </tbody>
+          </table>
+          {%- if paginate.pages > 1 -%}
+            <div class="pagination text-center mt-8">{{ paginate | default_pagination }}</div>
+          {%- endif -%}
+        {%- else -%}
+          <p>You haven't placed any orders yet.</p>
+        {%- endif -%}
+      {% endpaginate %}
+    </div>
+
+    <div>
+      <h2 class="h3 mb-4">Account details</h2>
+      <div class="p-4 border rounded">
+        {{ customer.default_address | format_address }}
+        <a href="{{ routes.account_addresses_url }}" class="button button--secondary button--small mt-4">View addresses ({{ customer.addresses_count }})</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style>
+  .gap-8 { gap: 2rem; }
+  .p-4 { padding: 1rem; }
+  .border { border: 1px solid rgba(0,0,0,0.1); }
+  .rounded { border-radius: 8px; }
+  table th { border-bottom: 1px solid rgba(0,0,0,0.1); padding-bottom: 1rem; }
+  table td { padding: 1rem 0; border-bottom: 1px solid rgba(0,0,0,0.05); }
+  @media screen and (max-width: 749px) {
+    .account .grid-cols-2 { grid-template-columns: 1fr; }
+  }
+</style>

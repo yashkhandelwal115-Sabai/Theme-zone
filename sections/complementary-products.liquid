@@ -1,0 +1,81 @@
+<div class="complementary-products page-width py-8" data-url="{{ routes.product_recommendations_url }}?section_id={{ section.id }}&product_id={{ product.id }}&limit={{ section.settings.products_to_show }}&intent=complementary">
+  {%- if recommendations.performed and recommendations.products_count > 0 -%}
+    <h2 class="h3 mb-4">{{ section.settings.heading | escape }}</h2>
+    <div class="grid grid-cols-1">
+      {%- for product in recommendations.products -%}
+        <div class="flex align-center border rounded p-4 mb-4">
+          <a href="{{ product.url }}" class="flex-shrink-0 mr-4">
+            <img src="{{ product.featured_image | image_url: width: 100 }}" alt="{{ product.featured_image.alt | escape }}" loading="lazy" width="100" height="auto" class="rounded">
+          </a>
+          <div>
+            <h3 class="h4 m-0"><a href="{{ product.url }}" class="color-inherit no-underline">{{ product.title | escape }}</a></h3>
+            <p class="m-0 mt-2">{{ product.price | money }}</p>
+          </div>
+        </div>
+      {%- endfor -%}
+    </div>
+  {%- endif -%}
+</div>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    const section = document.querySelector('.complementary-products');
+    if (!section) return;
+
+    fetch(section.dataset.url)
+      .then(response => response.text())
+      .then(text => {
+        const html = document.createElement('div');
+        html.innerHTML = text;
+        const recommendations = html.querySelector('.complementary-products');
+
+        if (recommendations && recommendations.innerHTML.trim().length) {
+          section.innerHTML = recommendations.innerHTML;
+        }
+      })
+      .catch(e => {
+        console.error(e);
+      });
+  });
+</script>
+
+<style>
+  .flex-shrink-0 { flex-shrink: 0; }
+  .mr-4 { margin-right: 1rem; }
+  .m-0 { margin: 0; }
+  .mt-2 { margin-top: 0.5rem; }
+  .border { border: 1px solid rgba(0,0,0,0.1); }
+  .p-4 { padding: 1rem; }
+  .color-inherit { color: inherit; }
+  .no-underline { text-decoration: none; }
+  .no-underline:hover { text-decoration: underline; }
+</style>
+
+{% schema %}
+{
+  "name": "Complementary products",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "default": "Pairs well with",
+      "label": "Heading"
+    },
+    {
+      "type": "range",
+      "id": "products_to_show",
+      "min": 1,
+      "max": 5,
+      "step": 1,
+      "default": 3,
+      "label": "Maximum products to show"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Complementary products"
+    }
+  ],
+  "templates": ["product"]
+}
+{% endschema %}

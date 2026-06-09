@@ -1,0 +1,80 @@
+<div class="customer login page-width py-8 flex justify-center">
+  <div class="login-form-wrapper w-100" style="max-width: 400px;">
+    <h1 class="h2 text-center mb-8">Log in</h1>
+
+    <div id="recover" style="display: none;">
+      <h2 class="h3 text-center mb-4">Reset your password</h2>
+      <p class="text-center mb-4">We will send you an email to reset your password.</p>
+      {%- form 'recover_customer_password' -%}
+        {% assign recover_success = form.posted_successfully? %}
+        <div class="field mb-4">
+          <label for="RecoverEmail" class="form__label">Email</label>
+          <input type="email" value="" name="email" id="RecoverEmail" class="field__input" autocorrect="off" autocapitalize="off" autocomplete="email" required>
+        </div>
+        {%- if form.errors -%}
+          <div class="form-message form-message--error mb-4">
+            {{ form.errors.messages['form'] }}
+          </div>
+        {%- endif -%}
+        <button type="submit" class="button button--primary w-100">Submit</button>
+        <div class="text-center mt-4">
+          <a href="#login" class="underlined-link" onclick="document.getElementById('recover').style.display='none'; document.getElementById('login').style.display='block'; return false;">Cancel</a>
+        </div>
+      {%- endform -%}
+    </div>
+
+    <div id="login">
+      {%- if recover_success == true -%}
+        <div class="form-message form-message--success mb-4 text-center">
+          We've sent you an email with a link to update your password.
+        </div>
+      {%- endif -%}
+
+      {%- form 'customer_login' -%}
+        {%- if form.errors -%}
+          <div class="form-message form-message--error mb-4">
+            {{ form.errors | default_errors }}
+          </div>
+        {%- endif -%}
+
+        <div class="field mb-4">
+          <label for="CustomerEmail" class="form__label">Email</label>
+          <input type="email" name="customer[email]" id="CustomerEmail" class="field__input" autocomplete="email" autocorrect="off" autocapitalize="off" required>
+        </div>
+
+        {%- if form.password_needed -%}
+          <div class="field mb-4">
+            <div class="flex justify-between align-center">
+              <label for="CustomerPassword" class="form__label m-0">Password</label>
+              <a href="#recover" class="text-sm" onclick="document.getElementById('recover').style.display='block'; document.getElementById('login').style.display='none'; return false;">Forgot your password?</a>
+            </div>
+            <input type="password" value="" name="customer[password]" id="CustomerPassword" class="field__input mt-2" autocomplete="current-password" required>
+          </div>
+        {%- endif -%}
+
+        <button type="submit" class="button button--primary w-100 mt-4">Sign in</button>
+
+        <div class="text-center mt-4">
+          <a href="{{ routes.account_register_url }}" class="underlined-link">Create account</a>
+        </div>
+      {%- endform -%}
+    </div>
+
+    {%- if shop.checkout.guest_login -%}
+      <div class="guest-login mt-8 pt-8 border-top text-center">
+        <h2 class="h3 mb-4">Continue as a guest</h2>
+        {%- form 'guest_login' -%}
+          <button class="button button--secondary w-100">Continue</button>
+        {%- endform -%}
+      </div>
+    {%- endif -%}
+  </div>
+</div>
+
+<style>
+  .w-100 { width: 100%; }
+  .form-message { padding: 1rem; border-radius: 8px; }
+  .form-message--error { background: #fee; color: #E32C2B; }
+  .form-message--success { background: #efe; color: #2E8B57; }
+  .border-top { border-top: 1px solid rgba(0,0,0,0.1); }
+</style>

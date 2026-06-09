@@ -1,0 +1,164 @@
+<div class="collection-grid py-8">
+  <div class="page-width">
+    <!-- Filters and Sort -->
+    <div class="collection-filters mb-8">
+      <form class="filter-form" id="CollectionFiltersForm">
+        {%- if section.settings.enable_filtering -%}
+          <div class="filter-group">
+            <span class="font-bold">Filter by:</span>
+            {%- for filter in collection.filters -%}
+              <details class="filter-group__details ml-4 inline-block">
+                <summary class="filter-group__summary">{{ filter.label }}</summary>
+                <div class="filter-group__display">
+                  {%- case filter.type -%}
+                    {%- when 'list' -%}
+                      <ul class="list-unstyled">
+                        {%- for value in filter.values -%}
+                          <li>
+                            <label for="Filter-{{ filter.param_name }}-{{ forloop.index }}">
+                              <input type="checkbox"
+                                name="{{ value.param_name }}"
+                                value="{{ value.value }}"
+                                id="Filter-{{ filter.param_name }}-{{ forloop.index }}"
+                                {% if value.active %}checked{% endif %}
+                                {% if value.count == 0 and value.active == false %}disabled{% endif %}
+                              >
+                              {{ value.label | escape }} ({{ value.count }})
+                            </label>
+                          </li>
+                        {%- endfor -%}
+                      </ul>
+                    {%- when 'price_range' -%}
+                      <div class="filter-group__price-range">
+                        <span>{{ cart.currency.symbol }}</span>
+                        <input name="{{ filter.min_value.param_name }}"
+                          id="Filter-{{ filter.min_value.param_name }}"
+                          {% if filter.min_value.value %}value="{{ filter.min_value.value | money_without_currency | replace: ',', '' }}"{% endif %}
+                          type="number"
+                          placeholder="0"
+                          min="0"
+                          max="{{ filter.range_max | money_without_currency | replace: ',', '' }}"
+                        >
+                        <span>-</span>
+                        <span>{{ cart.currency.symbol }}</span>
+                        <input name="{{ filter.max_value.param_name }}"
+                          id="Filter-{{ filter.max_value.param_name }}"
+                          {% if filter.max_value.value %}value="{{ filter.max_value.value | money_without_currency | replace: ',', '' }}"{% endif %}
+                          type="number"
+                          placeholder="{{ filter.range_max | money_without_currency | replace: ',', '' }}"
+                          min="0"
+                          max="{{ filter.range_max | money_without_currency | replace: ',', '' }}"
+                        >
+                      </div>
+                  {%- endcase -%}
+                </div>
+              </details>
+            {%- endfor -%}
+            <button type="submit" class="button button--secondary button--small ml-4">Apply Filters</button>
+          </div>
+        {%- endif -%}
+
+        {%- if section.settings.enable_sorting -%}
+          <div class="sort-group">
+            <label for="SortBy" class="font-bold">Sort by:</label>
+            <select name="sort_by" id="SortBy" class="filter-select ml-4">
+              {%- for option in collection.sort_options -%}
+                <option value="{{ option.value }}" {% if option.value == collection.sort_by %}selected="selected"{% endif %}>
+                  {{ option.name }}
+                </option>
+              {%- endfor -%}
+            </select>
+          </div>
+        {%- endif -%}
+      </form>
+    </div>
+
+    <!-- Product Grid -->
+    {% paginate collection.products by 16 %}
+      <div class="grid grid-cols-{{ section.settings.columns_desktop }}">
+        {%- for product in collection.products -%}
+          {% render 'product-card', product: product, show_vendor: section.settings.show_vendor %}
+        {%- else -%}
+          <div class="collection-grid__empty w-100 text-center py-8" style="grid-column: 1 / -1;">
+            <p>No products found in this collection.</p>
+          </div>
+        {%- endfor -%}
+      </div>
+
+      <!-- Pagination -->
+      {%- if paginate.pages > 1 -%}
+        <div class="pagination text-center mt-8">
+          {{ paginate | default_pagination }}
+        </div>
+      {%- endif -%}
+    {% endpaginate %}
+  </div>
+</div>
+
+<style>
+  .collection-grid { padding-bottom: 4rem; }
+  .collection-filters { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid rgba(0,0,0,0.1); padding-bottom: 1rem; }
+  .filter-form { display: flex; justify-content: space-between; width: 100%; align-items: center; }
+  .filter-select { padding: 0.5rem 1rem; border: 1px solid rgba(0,0,0,0.1); border-radius: 8px; font-family: inherit; }
+  .ml-4 { margin-left: 1rem; }
+  .font-bold { font-weight: bold; }
+  .pagination { margin-top: 4rem; }
+  .pagination span { display: inline-block; padding: 0.5rem 1rem; border: 1px solid rgba(0,0,0,0.1); margin: 0 0.25rem; border-radius: 4px; }
+  .pagination .current { background: var(--color-scheme-1-bg); color: var(--color-scheme-1-fg); border-color: var(--color-scheme-1-bg); }
+  .filter-group__details { position: relative; }
+  .filter-group__summary { cursor: pointer; padding: 0.5rem; border: 1px solid rgba(0,0,0,0.1); border-radius: 4px; }
+  .filter-group__display { position: absolute; top: 100%; left: 0; background: #fff; border: 1px solid rgba(0,0,0,0.1); border-radius: 4px; padding: 1rem; z-index: 10; min-width: 200px; box-shadow: 0 4px 12px rgba(0,0,0,0.05); }
+  .inline-block { display: inline-block; }
+  .filter-group__price-range { display: flex; align-items: center; gap: 0.5rem; }
+  .filter-group__price-range input { width: 80px; padding: 0.25rem; }
+  .button--small { padding: 0.5rem 1rem; }
+  @media screen and (max-width: 749px) {
+    .filter-form { flex-direction: column; gap: 1rem; align-items: flex-start; }
+    .collection-grid .grid { grid-template-columns: repeat({{ section.settings.columns_mobile }}, 1fr); }
+  }
+</style>
+
+{% schema %}
+{
+  "name": "Product Grid",
+  "settings": [
+    {
+      "type": "range",
+      "id": "columns_desktop",
+      "min": 2,
+      "max": 5,
+      "step": 1,
+      "default": 4,
+      "label": "Number of columns on desktop"
+    },
+    {
+      "type": "select",
+      "id": "columns_mobile",
+      "options": [
+        { "value": "1", "label": "1 column" },
+        { "value": "2", "label": "2 columns" }
+      ],
+      "default": "2",
+      "label": "Number of columns on mobile"
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_filtering",
+      "default": true,
+      "label": "Enable filtering"
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_sorting",
+      "default": true,
+      "label": "Enable sorting"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_vendor",
+      "default": true,
+      "label": "Show vendor"
+    }
+  ]
+}
+{% endschema %}

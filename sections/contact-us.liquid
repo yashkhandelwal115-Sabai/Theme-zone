@@ -1,0 +1,192 @@
+{{ 'page-contact.css' | asset_url | stylesheet_tag }}
+
+<div class="tz-page-contact">
+  <div class="tz-page-contact__container">
+    
+    <!-- Header -->
+    <div class="tz-page-contact__header">
+      <h1 class="tz-page-contact__title">{{ section.settings.heading }}</h1>
+      <p class="tz-page-contact__subtitle">{{ section.settings.subheading }}</p>
+    </div>
+
+    <div class="tz-page-contact__grid">
+      
+      <!-- Info Column -->
+      <div class="tz-page-contact__info">
+        
+        <!-- Contact Info Cards -->
+        <div class="tz-card-info">
+          <div class="tz-card-info__icon">
+            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path></svg>
+          </div>
+          <div class="tz-card-info__content">
+            <h3>Email Us</h3>
+            <p>Our friendly team is here to help.</p>
+            <a href="mailto:{{ section.settings.email }}">{{ section.settings.email }}</a>
+          </div>
+        </div>
+
+        <div class="tz-card-info">
+          <div class="tz-card-info__icon">
+            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"></path></svg>
+          </div>
+          <div class="tz-card-info__content">
+            <h3>Call Us</h3>
+            <p>Mon-Fri from 8am to 5pm.</p>
+            <a href="tel:{{ section.settings.phone }}">{{ section.settings.phone }}</a>
+          </div>
+        </div>
+
+        <div class="tz-card-info">
+          <div class="tz-card-info__icon">
+            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
+          </div>
+          <div class="tz-card-info__content">
+            <h3>Visit Us</h3>
+            <p>Come say hello at our office HQ.</p>
+            <address>{{ section.settings.address }}</address>
+          </div>
+        </div>
+
+        <!-- Live Support CTA -->
+        <div class="tz-card-support">
+          <svg class="tz-card-support__icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M17 8h2a2 2 0 012 2v6a2 2 0 01-2 2h-2v4l-4-4H9a1.994 1.994 0 01-1.414-.586m0 0L11 14h4a2 2 0 002-2V6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2v4l.586-.586z"></path></svg>
+          <h3>Need immediate help?</h3>
+          <p>Our live support team is online and ready to assist you.</p>
+          <button class="tz-btn--support">Start Live Chat</button>
+        </div>
+
+      </div>
+
+      <!-- Form Column -->
+      <div class="tz-card-form">
+        <h2 class="tz-card-form__title">Send us a message</h2>
+        
+        {%- form 'contact', id: 'ContactForm' -%}
+          {%- if form.posted_successfully? -%}
+            <div class="tz-form-success">
+              <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+              <span>Thanks for reaching out! We'll get back to you soon.</span>
+            </div>
+          {%- elsif form.errors -%}
+            <div class="tz-form-error">
+              <strong>Please check the following errors:</strong>
+              <ul>
+                {%- for field in form.errors -%}
+                  <li>{{ field | capitalize }} {{ form.errors.messages[field] }}</li>
+                {%- endfor -%}
+              </ul>
+            </div>
+          {%- endif -%}
+
+          <div class="tz-form-row">
+            <div>
+              <label for="ContactForm-name" class="tz-form-label">First Name</label>
+              <input class="tz-form-input" autocomplete="name" type="text" id="ContactForm-name" name="contact[{{ 'templates.contact.form.name' | t }}]" value="{% if form.name %}{{ form.name }}{% elsif customer %}{{ customer.name }}{% endif %}" placeholder="John">
+            </div>
+            <div>
+              <label for="ContactForm-last-name" class="tz-form-label">Last Name</label>
+              <input class="tz-form-input" type="text" id="ContactForm-last-name" name="contact[last_name]" placeholder="Doe">
+            </div>
+          </div>
+
+          <div class="tz-form-group">
+            <label for="ContactForm-email" class="tz-form-label">Email <span class="tz-form-required">*</span></label>
+            <input class="tz-form-input" autocomplete="email" type="email" id="ContactForm-email" name="contact[email]" spellcheck="false" autocapitalize="off" value="{% if form.email %}{{ form.email }}{% elsif customer %}{{ customer.email }}{% endif %}" aria-required="true" required placeholder="john@example.com">
+          </div>
+
+          <div class="tz-form-group">
+            <label for="ContactForm-phone" class="tz-form-label">Phone Number</label>
+            <input class="tz-form-input" type="tel" id="ContactForm-phone" autocomplete="tel" name="contact[{{ 'templates.contact.form.phone' | t }}]" pattern="[0-9\-]*" value="{% if form.phone %}{{ form.phone }}{% elsif customer %}{{ customer.phone }}{% endif %}" placeholder="+1 (555) 000-0000">
+          </div>
+
+          <div class="tz-form-group">
+            <label for="ContactForm-body" class="tz-form-label">Message <span class="tz-form-required">*</span></label>
+            <textarea class="tz-form-textarea" id="ContactForm-body" name="contact[{{ 'templates.contact.form.comment' | t }}]" required placeholder="How can we help you today?">{%- if form.body -%}{{ form.body }}{%- endif -%}</textarea>
+          </div>
+
+          <button type="submit" class="tz-btn--submit">
+            Send Message
+          </button>
+        {%- endform -%}
+      </div>
+
+    </div>
+
+    <!-- Map -->
+    {%- if section.settings.show_map -%}
+      <div class="tz-page-contact__map">
+        {%- if section.settings.map_iframe != blank -%}
+          {{ section.settings.map_iframe }}
+        {%- else -%}
+          <!-- Placeholder Map -->
+          <div class="tz-page-contact__map-placeholder">
+            <div>
+              <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0021 18.382V7.618a1 1 0 00-.553-.894L15 4m0 13V4m0 0L9 7"></path></svg>
+              <p>Please enter a Google Maps iframe code in the customizer</p>
+            </div>
+          </div>
+        {%- endif -%}
+      </div>
+    {%- endif -%}
+
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Contact Us Page",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Get in touch"
+    },
+    {
+      "type": "text",
+      "id": "subheading",
+      "label": "Subheading",
+      "default": "We'd love to hear from you. Please fill out this form."
+    },
+    {
+      "type": "header",
+      "content": "Store Information"
+    },
+    {
+      "type": "text",
+      "id": "email",
+      "label": "Email Address",
+      "default": "support@themezone.com"
+    },
+    {
+      "type": "text",
+      "id": "phone",
+      "label": "Phone Number",
+      "default": "+1 (800) 123-4567"
+    },
+    {
+      "type": "textarea",
+      "id": "address",
+      "label": "Physical Address",
+      "default": "123 Innovation Drive\nTech District, CA 94103\nUnited States"
+    },
+    {
+      "type": "header",
+      "content": "Map Embed"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_map",
+      "label": "Show Map",
+      "default": true
+    },
+    {
+      "type": "textarea",
+      "id": "map_iframe",
+      "label": "Google Maps Iframe Embed Code",
+      "info": "Go to Google Maps > Share > Embed a map > Copy HTML"
+    }
+  ]
+}
+{% endschema %}

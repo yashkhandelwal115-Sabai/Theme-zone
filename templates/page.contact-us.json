@@ -1,0 +1,12 @@
+{
+  "name": "Contact Us",
+  "wrapper": "main",
+  "sections": {
+    "main": {
+      "type": "contact-us"
+    }
+  },
+  "order": [
+    "main"
+  ]
+}

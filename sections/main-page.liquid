@@ -1,0 +1,17 @@
+<div class="main-page page-width page-width--narrow py-8">
+  <h1 class="h1 text-center mb-8">{{ page.title | escape }}</h1>
+  <div class="rte">
+    {{ page.content }}
+  </div>
+</div>
+
+<style>
+  .page-width--narrow { max-width: 800px; margin: 0 auto; }
+</style>
+
+{% schema %}
+{
+  "name": "Page",
+  "settings": []
+}
+{% endschema %}

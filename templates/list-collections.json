@@ -1,0 +1,17 @@
+{
+  "name": "Collections list",
+  "wrapper": "main",
+  "sections": {
+    "main": {
+      "type": "main-list-collections",
+      "settings": {
+        "collections_per_page": 12,
+        "columns_desktop": 3,
+        "columns_mobile": "1"
+      }
+    }
+  },
+  "order": [
+    "main"
+  ]
+}

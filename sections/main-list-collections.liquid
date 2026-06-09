@@ -1,0 +1,79 @@
+<div class="list-collections page-width py-8">
+  <h1 class="h1 text-center mb-8">{{ section.settings.title | default: 'Collections' | escape }}</h1>
+
+  {%- paginate collections by section.settings.collections_per_page -%}
+    <div class="grid grid-cols-{{ section.settings.columns_desktop }}">
+      {%- for collection in collections -%}
+        <div class="collection-card">
+          <a href="{{ collection.url }}">
+            {%- assign image = collection.featured_image -%}
+            {%- if image -%}
+              <img src="{{ image | image_url: width: 600 }}" alt="{{ collection.title | escape }}" loading="lazy" width="600" height="auto" class="w-100 rounded mb-4">
+            {%- else -%}
+              {{ 'collection-1' | placeholder_svg_tag: 'placeholder-svg rounded mb-4' }}
+            {%- endif -%}
+            <h2 class="h3 text-center color-inherit no-underline">{{ collection.title | escape }}</h2>
+          </a>
+        </div>
+      {%- endfor -%}
+    </div>
+
+    {%- if paginate.pages > 1 -%}
+      <div class="pagination text-center mt-8">
+        {{ paginate | default_pagination }}
+      </div>
+    {%- endif -%}
+  {%- endpaginate -%}
+</div>
+
+<style>
+  .collection-card a { text-decoration: none; color: inherit; }
+  .collection-card a:hover h2 { text-decoration: underline; }
+  .w-100 { width: 100%; display: block; }
+  .rounded { border-radius: 8px; overflow: hidden; }
+  @media screen and (max-width: 749px) {
+    .list-collections .grid { grid-template-columns: repeat({{ section.settings.columns_mobile }}, 1fr); }
+  }
+</style>
+
+{% schema %}
+{
+  "name": "Collections list",
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Heading",
+      "default": "Collections"
+    },
+    {
+      "type": "range",
+      "id": "collections_per_page",
+      "min": 4,
+      "max": 24,
+      "step": 4,
+      "default": 12,
+      "label": "Collections per page"
+    },
+    {
+      "type": "range",
+      "id": "columns_desktop",
+      "min": 2,
+      "max": 5,
+      "step": 1,
+      "default": 3,
+      "label": "Columns on desktop"
+    },
+    {
+      "type": "select",
+      "id": "columns_mobile",
+      "options": [
+        { "value": "1", "label": "1 column" },
+        { "value": "2", "label": "2 columns" }
+      ],
+      "default": "1",
+      "label": "Columns on mobile"
+    }
+  ]
+}
+{% endschema %}

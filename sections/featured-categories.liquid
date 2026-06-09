@@ -1,0 +1,84 @@
+<div class="featured-categories color-scheme-{{ section.settings.color_scheme }} py-8">
+  <div class="page-width">
+    {%- if section.settings.title != blank -%}
+      <h2 class="section-header h2">{{ section.settings.title | escape }}</h2>
+    {%- endif -%}
+
+    <div class="grid grid-cols-4">
+      {%- for block in section.blocks -%}
+        <a href="{{ block.settings.collection.url | default: '#' }}" class="category-card" {{ block.shopify_attributes }}>
+          <div class="category-card__image">
+            {%- if block.settings.collection.image != blank -%}
+              <img src="{{ block.settings.collection.image | image_url: width: 400 }}" alt="{{ block.settings.collection.title }}" loading="lazy" width="400" height="auto">
+            {%- else -%}
+              {{ 'collection-1' | placeholder_svg_tag: 'placeholder-svg' }}
+            {%- endif -%}
+          </div>
+          <div class="category-card__title">
+            <span class="h4">{{ block.settings.collection.title | default: 'Category Name' }}</span>
+          </div>
+        </a>
+      {%- endfor -%}
+    </div>
+  </div>
+</div>
+
+<style>
+  .featured-categories { padding-top: 4rem; padding-bottom: 4rem; }
+  .category-card { display: block; border-radius: 12px; overflow: hidden; background: var(--color-scheme-2-bg); color: var(--color-scheme-2-fg); box-shadow: 0 4px 12px rgba(0,0,0,0.05); transition: transform 0.3s ease; text-decoration: none; }
+  .category-card:hover { transform: translateY(-4px); }
+  .category-card__image { width: 100%; aspect-ratio: 1/1; overflow: hidden; background: #f4f4f4; }
+  .category-card__image img, .category-card__image svg { width: 100%; height: 100%; object-fit: cover; }
+  .category-card__title { padding: 1.5rem; text-align: center; }
+</style>
+
+{% schema %}
+{
+  "name": "Featured Categories",
+  "max_blocks": 8,
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "default": "Shop by Category",
+      "label": "Heading"
+    },
+    {
+      "type": "select",
+      "id": "color_scheme",
+      "options": [
+        { "value": "1", "label": "Electric Blue" },
+        { "value": "2", "label": "Arctic White" },
+        { "value": "3", "label": "Carbon Black" },
+        { "value": "4", "label": "Neon Green" }
+      ],
+      "default": "2",
+      "label": "Color scheme"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "collection",
+      "name": "Collection",
+      "settings": [
+        {
+          "type": "collection",
+          "id": "collection",
+          "label": "Collection"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Featured Categories",
+      "blocks": [
+        { "type": "collection" },
+        { "type": "collection" },
+        { "type": "collection" },
+        { "type": "collection" }
+      ]
+    }
+  ]
+}
+{% endschema %}

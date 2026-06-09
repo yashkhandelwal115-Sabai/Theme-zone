@@ -1,0 +1,101 @@
+<div class="cart__footer page-width pb-8" id="main-cart-footer" data-id="{{ section.id }}">
+  <div class="cart__blocks grid">
+    {% for block in section.blocks %}
+      {%- case block.type -%}
+        {%- when '@app' -%}
+          {% render block %}
+        {%- when 'subtotal' -%}
+          <div class="cart__blocks-content text-right" {{ block.shopify_attributes }}>
+            <div class="cart__subtotal-wrapper">
+              <h2 class="h4 m-0">{{ 'sections.cart.subtotal' | t }}</h2>
+              <p class="cart__subtotal-value h3 m-0">{{ cart.total_price | money_with_currency }}</p>
+            </div>
+            
+            {%- if cart.cart_level_discount_applications.size > 0 -%}
+              <ul class="discounts list-unstyled" role="list" aria-label="Discounts">
+                {%- for discount in cart.cart_level_discount_applications -%}
+                  <li class="discounts__discount">
+                    <svg aria-hidden="true" focusable="false" role="presentation" class="icon icon-discount color-foreground-text" viewBox="0 0 12 12" width="12" height="12"><path fill-rule="evenodd" clip-rule="evenodd" d="M7 0h3a2 2 0 012 2v3a1 1 0 01-.3.7l-6 6a1 1 0 01-1.4 0l-4-4a1 1 0 010-1.4l6-6A1 1 0 017 0zm2 2a1 1 0 102 0 1 1 0 00-2 0z" fill="currentColor"/></svg>
+                    {{ discount.title }}
+                    (-{{ discount.total_allocated_amount | money }})
+                  </li>
+                {%- endfor -%}
+              </ul>
+            {%- endif -%}
+
+            <small class="tax-note caption-large mt-4 block">
+              {%- if cart.taxes_included and shop.shipping_policy.body != blank -%}
+                Taxes included. <a href="{{ shop.shipping_policy.url }}">Shipping</a> calculated at checkout.
+              {%- elsif cart.taxes_included -%}
+                Taxes included. Shipping calculated at checkout.
+              {%- elsif shop.shipping_policy.body != blank -%}
+                {{ 'sections.cart.taxes_and_shipping_policy_at_checkout_html' | t: link: shop.shipping_policy.url }}
+              {%- else -%}
+                Taxes and shipping calculated at checkout.
+              {%- endif -%}
+            </small>
+          </div>
+        {%- when 'buttons' -%}
+          <div class="cart__ctas text-right mt-4" {{ block.shopify_attributes }}>
+            <noscript>
+              <button type="submit" class="cart__update-button button button--secondary" form="cart">
+                Update
+              </button>
+            </noscript>
+
+            <button type="submit" id="checkout" class="cart__checkout-button button button--primary w-100 mt-4" name="checkout"{% if cart == empty %} disabled{% endif %} form="cart">
+              {{ 'sections.cart.checkout' | t }}
+            </button>
+
+            {%- if additional_checkout_buttons -%}
+              <div class="cart__dynamic-checkout-buttons additional-checkout-buttons mt-4">
+                {{ content_for_additional_checkout_buttons }}
+              </div>
+            {%- endif -%}
+          </div>
+      {%- endcase -%}
+    {% endfor %}
+  </div>
+</div>
+
+<style>
+  .cart__footer { display: flex; justify-content: flex-end; }
+  .cart__blocks { width: 100%; max-width: 400px; display: flex; flex-direction: column; gap: 1rem; }
+  .cart__subtotal-wrapper { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid rgba(0,0,0,0.1); padding-bottom: 1rem; margin-bottom: 1rem; }
+  .tax-note { color: rgba(0,0,0,0.6); }
+  .w-100 { width: 100%; }
+  .pb-8 { padding-bottom: 4rem; }
+  .m-0 { margin: 0; }
+  .block { display: block; }
+</style>
+
+{% schema %}
+{
+  "name": "Cart footer",
+  "blocks": [
+    {
+      "type": "subtotal",
+      "name": "Subtotal",
+      "limit": 1
+    },
+    {
+      "type": "buttons",
+      "name": "Checkout buttons",
+      "limit": 1
+    },
+    {
+      "type": "@app"
+    }
+  ],
+  "default": {
+    "blocks": [
+      {
+        "type": "subtotal"
+      },
+      {
+        "type": "buttons"
+      }
+    ]
+  }
+}
+{% endschema %}

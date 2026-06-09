@@ -1,0 +1,41 @@
+{
+  "name": "Footer group",
+  "type": "footer",
+  "sections": {
+    "newsletter": {
+      "type": "newsletter",
+      "settings": {
+        "color_scheme": "1"
+      }
+    },
+    "footer": {
+      "type": "footer",
+      "blocks": {
+        "menu_1": {
+          "type": "link_list",
+          "settings": {
+            "heading": "Quick links"
+          }
+        },
+        "text_1": {
+          "type": "text",
+          "settings": {
+            "heading": "About us",
+            "subtext": "<p>ThemeZone Electronics brings you the latest gadgets and technology.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "menu_1",
+        "text_1"
+      ],
+      "settings": {
+        "color_scheme": "3"
+      }
+    }
+  },
+  "order": [
+    "newsletter",
+    "footer"
+  ]
+}

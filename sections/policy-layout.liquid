@@ -1,0 +1,130 @@
+{{ 'page-policy.css' | asset_url | stylesheet_tag }}
+
+<div class="tz-page-policy">
+  <div class="tz-page-policy__container">
+    
+    <!-- Hero Header -->
+    <div class="tz-page-policy__header">
+      <h1 class="tz-page-policy__title">{{ section.settings.title | default: page.title }}</h1>
+      {%- if section.settings.last_updated != blank -%}
+        <p class="tz-page-policy__meta">Last Updated: {{ section.settings.last_updated }}</p>
+      {%- endif -%}
+    </div>
+
+    <div class="tz-page-policy__layout">
+      
+      <!-- Sticky Sidebar Navigation (Desktop) -->
+      {%- if section.settings.show_sidebar -%}
+        <div class="tz-page-policy__sidebar">
+          <div class="tz-card-sidebar">
+            <h3 class="tz-card-sidebar__title">Quick Links</h3>
+            <ul class="tz-card-sidebar__list" id="policy-nav">
+              <!-- JS will populate this list based on H2 tags in the content -->
+              <li class="tz-card-sidebar__loading" id="nav-loading">Loading sections...</li>
+            </ul>
+          </div>
+        </div>
+      {%- endif -%}
+
+      <!-- Main Content Area -->
+      <div class="tz-page-policy__content-area">
+        
+        <div class="tz-card-content">
+          <div class="tz-prose" id="policy-content">
+            {%- if page.content != blank -%}
+              {{ page.content }}
+            {%- else -%}
+              <!-- Premium Demo Content if page is empty -->
+              <p><strong>This is a premium demo layout for your policy document. Please add your actual policy text inside the Shopify Admin -> Pages area.</strong></p>
+              
+              <h2 id="section-1">1. Introduction</h2>
+              <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+              
+              <h2 id="section-2">2. Processing Time</h2>
+              <p>Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+              
+              <div class="tz-prose-note">
+                <p><strong>Note:</strong> We process all orders within 24-48 business hours.</p>
+              </div>
+              
+              <h2 id="section-3">3. International Returns</h2>
+              <p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo.</p>
+              <ul>
+                <li>Item must be unused and in original packaging</li>
+                <li>Proof of purchase is required</li>
+                <li>Customer is responsible for return shipping costs</li>
+              </ul>
+              
+              <h2 id="section-4">4. Contact Information</h2>
+              <p>If you have any questions about this policy, please contact our support team at support@themezone.com.</p>
+            {%- endif -%}
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    // Automatically generate sidebar navigation from H2 tags
+    const content = document.getElementById('policy-content');
+    const nav = document.getElementById('policy-nav');
+    const loading = document.getElementById('nav-loading');
+    
+    if (content && nav) {
+      const headings = content.querySelectorAll('h2');
+      
+      if (headings.length > 0) {
+        if (loading) loading.style.display = 'none';
+        
+        headings.forEach((heading, index) => {
+          // Ensure heading has an ID
+          if (!heading.id) {
+            heading.id = 'policy-section-' + index;
+          }
+          
+          const li = document.createElement('li');
+          const a = document.createElement('a');
+          
+          a.href = '#' + heading.id;
+          a.textContent = heading.textContent;
+          a.className = 'tz-card-sidebar__link';
+          
+          li.appendChild(a);
+          nav.appendChild(li);
+        });
+      } else {
+        if (loading) loading.textContent = "No sections found.";
+      }
+    }
+  });
+</script>
+
+{% schema %}
+{
+  "name": "Policy Page",
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Custom Title",
+      "info": "Leave blank to use the default page title"
+    },
+    {
+      "type": "text",
+      "id": "last_updated",
+      "label": "Last Updated Date",
+      "default": "October 2023"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_sidebar",
+      "label": "Show Table of Contents Sidebar",
+      "default": true
+    }
+  ]
+}
+{% endschema %}

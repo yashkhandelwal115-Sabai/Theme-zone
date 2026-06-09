@@ -1,0 +1,151 @@
+<div class="mockup-compare-models py-16 animate-fade-up">
+  <div class="page-width">
+    
+    <div class="text-center mb-12 flex flex-col items-center">
+      <h2 class="h2 m-0 font-bold" style="font-size: 1.5rem;">{{ section.settings.heading | escape }}</h2>
+      <div class="title-underline mt-4 mb-2"></div>
+    </div>
+
+    <div class="mockup-compare-table-wrapper rounded-2xl overflow-hidden shadow-sm bg-white">
+      <table class="mockup-compare-table w-100 text-center">
+        <thead>
+          <tr>
+            <th class="text-left font-bold text-text-primary px-8 py-6 border-b border-r border-gray-100 w-1/4">Feature</th>
+            {%- for i in (1..3) -%}
+              <th class="px-6 py-6 border-b border-gray-100 {% unless forloop.last %}border-r{% endunless %} w-1/4">
+                <div class="flex items-center justify-center gap-4 text-left">
+                  <div class="w-12 h-16 flex items-center justify-center rounded overflow-hidden">
+                    <img src="{{ 'mockup-iphone.jpg' | asset_url }}" alt="Phone" class="w-full h-full object-cover">
+                  </div>
+                  <div>
+                    <h4 class="font-bold text-sm text-text-primary m-0">
+                      {% if i == 1 %}iPhone 15 Pro{% elsif i == 2 %}Samsung S24 Ultra{% else %}Google Pixel 8 Pro{% endif %}
+                    </h4>
+                    <div class="text-xs text-secondary mt-1">From $899</div>
+                  </div>
+                </div>
+              </th>
+            {%- endfor -%}
+          </tr>
+        </thead>
+        <tbody>
+          {%- for block in section.blocks -%}
+            <tr {{ block.shopify_attributes }}>
+              <td class="text-left font-bold text-sm text-text-primary px-8 py-4 border-b border-r border-gray-100">{{ block.settings.feature_name | escape }}</td>
+              <td class="text-xs text-text-primary px-6 py-4 border-b border-r border-gray-100 leading-tight whitespace-pre-line">{{ block.settings.value_1 | escape }}</td>
+              <td class="text-xs text-text-primary px-6 py-4 border-b border-r border-gray-100 leading-tight whitespace-pre-line">{{ block.settings.value_2 | escape }}</td>
+              <td class="text-xs text-text-primary px-6 py-4 border-b border-gray-100 leading-tight whitespace-pre-line">{{ block.settings.value_3 | escape }}</td>
+            </tr>
+          {%- endfor -%}
+          <!-- Footer Row -->
+          <tr>
+            <td class="text-left font-bold text-sm text-text-primary px-8 py-6 border-r border-gray-100">Buy Now</td>
+            <td class="px-6 py-6 border-r border-gray-100"><a href="{{ routes.all_products_collection_url }}" class="button button--primary text-sm px-6 py-2 h-auto min-h-0" style="text-decoration:none">View Product</a></td>
+            <td class="px-6 py-6 border-r border-gray-100"><a href="{{ routes.all_products_collection_url }}" class="button button--primary text-sm px-6 py-2 h-auto min-h-0" style="text-decoration:none">View Product</a></td>
+            <td class="px-6 py-6"><a href="{{ routes.all_products_collection_url }}" class="button button--primary text-sm px-6 py-2 h-auto min-h-0" style="text-decoration:none">View Product</a></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+  </div>
+</div>
+
+<style>
+  .mockup-compare-models {
+    background-color: var(--color-surface); /* #FFFFFF */
+  }
+
+  .title-underline {
+    width: 30px;
+    height: 2px;
+    background-color: var(--color-primary);
+  }
+
+  .mockup-compare-table-wrapper {
+    border: 1px solid rgba(0,0,0,0.05);
+    overflow-x: auto;
+  }
+
+  .mockup-compare-table {
+    border-collapse: collapse;
+    min-width: 800px;
+  }
+
+  .border-gray-100 { border-color: #f3f4f6; }
+  .border-b { border-bottom-width: 1px; border-bottom-style: solid; }
+  .border-r { border-right-width: 1px; border-right-style: solid; }
+  
+  .shadow-sm { box-shadow: 0 4px 12px rgba(0,0,0,0.03); }
+  .rounded-2xl { border-radius: 1rem; }
+  .bg-white { background-color: #fff; }
+  .bg-gray-50 { background-color: #f9fafb; }
+  
+  .text-text-primary { color: var(--color-text-primary); }
+  .text-secondary { color: #6b7280; }
+  .text-sm { font-size: 0.875rem; }
+  .text-xs { font-size: 0.75rem; }
+  .font-bold { font-weight: 700; }
+  .leading-tight { line-height: 1.4; }
+  .whitespace-pre-line { white-space: pre-line; }
+  
+  .px-8 { padding-left: 2rem; padding-right: 2rem; }
+  .py-6 { padding-top: 1.5rem; padding-bottom: 1.5rem; }
+  .px-6 { padding-left: 1.5rem; padding-right: 1.5rem; }
+  .py-4 { padding-top: 1rem; padding-bottom: 1rem; }
+  
+  .w-1\/4 { width: 25%; }
+  .h-auto { height: auto; }
+  .min-h-0 { min-height: 0; }
+</style>
+
+{% schema %}
+{
+  "name": "Mockup Compare Models",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "default": "Compare Models",
+      "label": "Heading"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "feature_row",
+      "name": "Feature Row",
+      "settings": [
+        {
+          "type": "text",
+          "id": "feature_name",
+          "default": "Processor",
+          "label": "Feature Name"
+        },
+        {
+          "type": "textarea",
+          "id": "value_1",
+          "default": "A17 Pro Chip",
+          "label": "Product 1 Value"
+        },
+        {
+          "type": "textarea",
+          "id": "value_2",
+          "default": "Snapdragon 8 Gen 3",
+          "label": "Product 2 Value"
+        },
+        {
+          "type": "textarea",
+          "id": "value_3",
+          "default": "Google Tensor G3",
+          "label": "Product 3 Value"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Mockup Compare Models"
+    }
+  ]
+}
+{% endschema %}

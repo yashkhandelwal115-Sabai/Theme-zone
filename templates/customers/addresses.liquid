@@ -1,0 +1,184 @@
+<div class="customer addresses page-width py-8">
+  <div class="flex justify-between align-center mb-8">
+    <h1 class="h2">Addresses</h1>
+    <a href="{{ routes.account_url }}" class="button button--secondary">Return to Account Details</a>
+  </div>
+
+  <div class="text-center mb-8">
+    <button type="button" aria-expanded="false" aria-controls="AddAddress" class="button button--primary js-add-address">Add a new address</button>
+  </div>
+
+  <div id="AddAddress" class="form-wrapper w-100 mx-auto" style="max-width: 600px; display: none;">
+    <h2 class="h3 mb-4 text-center">Add a new address</h2>
+    {%- form 'customer_address', customer.new_address -%}
+      <div class="grid grid-cols-2 gap-4 mb-4">
+        <div class="field">
+          <label for="AddressFirstNameNew">First name</label>
+          <input type="text" id="AddressFirstNameNew" name="address[first_name]" value="{{ form.first_name }}" autocomplete="given-name" class="field__input">
+        </div>
+        <div class="field">
+          <label for="AddressLastNameNew">Last name</label>
+          <input type="text" id="AddressLastNameNew" name="address[last_name]" value="{{ form.last_name }}" autocomplete="family-name" class="field__input">
+        </div>
+      </div>
+      <div class="field mb-4">
+        <label for="AddressCompanyNew">Company</label>
+        <input type="text" id="AddressCompanyNew" name="address[company]" value="{{ form.company }}" autocomplete="organization" class="field__input">
+      </div>
+      <div class="field mb-4">
+        <label for="AddressAddress1New">Address 1</label>
+        <input type="text" id="AddressAddress1New" name="address[address1]" value="{{ form.address1 }}" autocomplete="address-line1" class="field__input">
+      </div>
+      <div class="field mb-4">
+        <label for="AddressAddress2New">Address 2</label>
+        <input type="text" id="AddressAddress2New" name="address[address2]" value="{{ form.address2 }}" autocomplete="address-line2" class="field__input">
+      </div>
+      <div class="grid grid-cols-2 gap-4 mb-4">
+        <div class="field">
+          <label for="AddressCityNew">City</label>
+          <input type="text" id="AddressCityNew" name="address[city]" value="{{ form.city }}" autocomplete="address-level2" class="field__input">
+        </div>
+        <div class="field">
+          <label for="AddressCountryNew">Country/Region</label>
+          <select id="AddressCountryNew" name="address[country]" data-default="{{ form.country }}" autocomplete="country" class="field__input">{{ all_country_option_tags }}</select>
+        </div>
+      </div>
+      <div id="AddressProvinceContainerNew" class="field mb-4" style="display: none;">
+        <label for="AddressProvinceNew">Province</label>
+        <select id="AddressProvinceNew" name="address[province]" data-default="{{ form.province }}" autocomplete="address-level1" class="field__input"></select>
+      </div>
+      <div class="grid grid-cols-2 gap-4 mb-4">
+        <div class="field">
+          <label for="AddressZipNew">Postal/Zip code</label>
+          <input type="text" id="AddressZipNew" name="address[zip]" value="{{ form.zip }}" autocapitalize="characters" autocomplete="postal-code" class="field__input">
+        </div>
+        <div class="field">
+          <label for="AddressPhoneNew">Phone</label>
+          <input type="tel" id="AddressPhoneNew" name="address[phone]" value="{{ form.phone }}" autocomplete="tel" class="field__input">
+        </div>
+      </div>
+      <div class="mb-4">
+        {{ form.set_as_default_checkbox }}
+        <label for="address_default_address_new">Set as default address</label>
+      </div>
+      <div class="flex justify-center mt-4">
+        <button type="submit" class="button button--primary mr-2">Add address</button>
+        <button type="reset" class="button button--secondary js-cancel-address">Cancel</button>
+      </div>
+    {%- endform -%}
+  </div>
+
+  <ul role="list" class="grid grid-cols-3 gap-4 mt-8 list-unstyled">
+    {%- for address in customer.addresses -%}
+      <li data-address class="border rounded p-4 text-center">
+        {%- if address == customer.default_address -%}
+          <h2 class="h4">Default</h2>
+        {%- endif -%}
+        {{ address | format_address }}
+        <button type="button" class="button button--secondary button--small mt-4" onclick="document.getElementById('EditAddress_{{ address.id }}').style.display = 'block';">Edit</button>
+        <form class="inline-block" method="post" action="/account/addresses/{{ address.id }}">
+          <input type="hidden" name="_method" value="delete">
+          <button type="submit" class="button button--tertiary button--small mt-4">Delete</button>
+        </form>
+
+        <div id="EditAddress_{{ address.id }}" class="form-wrapper text-left mt-4 p-4 border rounded" style="display: none;">
+          <h2 class="h4 mb-4 text-center">Edit address</h2>
+          {%- form 'customer_address', address -%}
+            <div class="grid grid-cols-2 gap-4 mb-4">
+              <div class="field">
+                <label for="AddressFirstName_{{ form.id }}">First name</label>
+                <input type="text" id="AddressFirstName_{{ form.id }}" name="address[first_name]" value="{{ form.first_name }}" autocomplete="given-name" class="field__input">
+              </div>
+              <div class="field">
+                <label for="AddressLastName_{{ form.id }}">Last name</label>
+                <input type="text" id="AddressLastName_{{ form.id }}" name="address[last_name]" value="{{ form.last_name }}" autocomplete="family-name" class="field__input">
+              </div>
+            </div>
+            <div class="field mb-4">
+              <label for="AddressCompany_{{ form.id }}">Company</label>
+              <input type="text" id="AddressCompany_{{ form.id }}" name="address[company]" value="{{ form.company }}" autocomplete="organization" class="field__input">
+            </div>
+            <div class="field mb-4">
+              <label for="AddressAddress1_{{ form.id }}">Address 1</label>
+              <input type="text" id="AddressAddress1_{{ form.id }}" name="address[address1]" value="{{ form.address1 }}" autocomplete="address-line1" class="field__input">
+            </div>
+            <div class="field mb-4">
+              <label for="AddressAddress2_{{ form.id }}">Address 2</label>
+              <input type="text" id="AddressAddress2_{{ form.id }}" name="address[address2]" value="{{ form.address2 }}" autocomplete="address-line2" class="field__input">
+            </div>
+            <div class="grid grid-cols-2 gap-4 mb-4">
+              <div class="field">
+                <label for="AddressCity_{{ form.id }}">City</label>
+                <input type="text" id="AddressCity_{{ form.id }}" name="address[city]" value="{{ form.city }}" autocomplete="address-level2" class="field__input">
+              </div>
+              <div class="field">
+                <label for="AddressCountry_{{ form.id }}">Country/Region</label>
+                <select id="AddressCountry_{{ form.id }}" name="address[country]" data-default="{{ form.country }}" autocomplete="country" class="field__input">{{ all_country_option_tags }}</select>
+              </div>
+            </div>
+            <div id="AddressProvinceContainer_{{ form.id }}" class="field mb-4" style="display: none;">
+              <label for="AddressProvince_{{ form.id }}">Province</label>
+              <select id="AddressProvince_{{ form.id }}" name="address[province]" data-default="{{ form.province }}" autocomplete="address-level1" class="field__input"></select>
+            </div>
+            <div class="grid grid-cols-2 gap-4 mb-4">
+              <div class="field">
+                <label for="AddressZip_{{ form.id }}">Postal/Zip code</label>
+                <input type="text" id="AddressZip_{{ form.id }}" name="address[zip]" value="{{ form.zip }}" autocapitalize="characters" autocomplete="postal-code" class="field__input">
+              </div>
+              <div class="field">
+                <label for="AddressPhone_{{ form.id }}">Phone</label>
+                <input type="tel" id="AddressPhone_{{ form.id }}" name="address[phone]" value="{{ form.phone }}" autocomplete="tel" class="field__input">
+              </div>
+            </div>
+            <div class="mb-4">
+              {{ form.set_as_default_checkbox }}
+              <label for="address_default_address_{{ form.id }}">Set as default address</label>
+            </div>
+            <div class="flex justify-center mt-4">
+              <button type="submit" class="button button--primary mr-2">Update address</button>
+              <button type="button" class="button button--secondary" onclick="document.getElementById('EditAddress_{{ address.id }}').style.display = 'none';">Cancel</button>
+            </div>
+          {%- endform -%}
+        </div>
+      </li>
+    {%- endfor -%}
+  </ul>
+</div>
+
+<script src="{{ 'shopify_common.js' | shopify_asset_url }}" defer></script>
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    document.querySelector('.js-add-address').addEventListener('click', () => {
+      document.getElementById('AddAddress').style.display = 'block';
+    });
+    document.querySelector('.js-cancel-address').addEventListener('click', () => {
+      document.getElementById('AddAddress').style.display = 'none';
+    });
+
+    if (typeof Shopify !== 'undefined' && Shopify.CountryProvinceSelector) {
+      new Shopify.CountryProvinceSelector('AddressCountryNew', 'AddressProvinceNew', {
+        hideElement: 'AddressProvinceContainerNew'
+      });
+      {% for address in customer.addresses %}
+        new Shopify.CountryProvinceSelector('AddressCountry_{{ address.id }}', 'AddressProvince_{{ address.id }}', {
+          hideElement: 'AddressProvinceContainer_{{ address.id }}'
+        });
+      {% endfor %}
+    }
+  });
+</script>
+
+<style>
+  .gap-4 { gap: 1rem; }
+  .p-4 { padding: 1rem; }
+  .border { border: 1px solid rgba(0,0,0,0.1); }
+  .rounded { border-radius: 8px; }
+  .w-100 { width: 100%; }
+  .mx-auto { margin-left: auto; margin-right: auto; }
+  .mr-2 { margin-right: 0.5rem; }
+  .inline-block { display: inline-block; }
+  @media screen and (max-width: 749px) {
+    .addresses .grid-cols-3 { grid-template-columns: 1fr; }
+    .addresses .grid-cols-2 { grid-template-columns: 1fr; }
+  }
+</style>

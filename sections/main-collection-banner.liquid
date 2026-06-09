@@ -1,0 +1,53 @@
+<div class="collection-banner color-scheme-{{ section.settings.color_scheme }} py-8 text-center">
+  <div class="page-width">
+    <h1 class="h1 mt-0">{{ collection.title | escape }}</h1>
+    {%- if section.settings.show_collection_description and collection.description != blank -%}
+      <div class="collection-banner__description mt-4">{{ collection.description }}</div>
+    {%- endif -%}
+    {%- if section.settings.show_collection_image and collection.image != blank -%}
+      <div class="collection-banner__image mt-8">
+        <img src="{{ collection.image | image_url: width: 1200 }}" alt="{{ collection.title }}" loading="lazy" width="1200" height="auto" class="rounded-xl shadow-lg">
+      </div>
+    {%- endif -%}
+  </div>
+</div>
+
+<style>
+  .collection-banner { padding-top: 4rem; padding-bottom: 4rem; }
+  .collection-banner__description { max-width: 800px; margin-left: auto; margin-right: auto; }
+  .collection-banner__image img { width: 100%; height: auto; max-height: 400px; object-fit: cover; }
+  .rounded-xl { border-radius: 16px; overflow: hidden; }
+  .shadow-lg { box-shadow: 0 10px 30px rgba(0,0,0,0.1); }
+</style>
+
+{% schema %}
+{
+  "name": "Collection Banner",
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "show_collection_description",
+      "default": true,
+      "label": "Show collection description"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_collection_image",
+      "default": true,
+      "label": "Show collection image"
+    },
+    {
+      "type": "select",
+      "id": "color_scheme",
+      "options": [
+        { "value": "1", "label": "Electric Blue" },
+        { "value": "2", "label": "Arctic White" },
+        { "value": "3", "label": "Carbon Black" },
+        { "value": "4", "label": "Neon Green" }
+      ],
+      "default": "2",
+      "label": "Color scheme"
+    }
+  ]
+}
+{% endschema %}
