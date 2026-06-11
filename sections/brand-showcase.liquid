@@ -1,31 +1,112 @@
-<div class="brand-showcase color-scheme-{{ section.settings.color_scheme }} py-8">
+{%- liquid
+  assign scheme_bg = settings.color_scheme_2_bg
+  assign scheme_fg = settings.color_scheme_2_fg
+  
+  case section.settings.color_scheme
+    when '1'
+      assign scheme_bg = settings.color_scheme_1_bg
+      assign scheme_fg = settings.color_scheme_1_fg
+    when '3'
+      assign scheme_bg = settings.color_scheme_3_bg
+      assign scheme_fg = settings.color_scheme_3_fg
+    when '4'
+      assign scheme_bg = settings.color_scheme_4_bg
+      assign scheme_fg = settings.color_scheme_4_fg
+  endcase
+-%}
+
+<div class="brand-showcase color-{{ section.settings.color_scheme }} py-12" style="background-color: {{ scheme_bg }}; color: {{ scheme_fg }}; --color-foreground: {{ scheme_fg }}; --color-background: {{ scheme_bg }};">
   <div class="page-width text-center">
     {%- if section.settings.title != blank -%}
-      <h2 class="section-header h2">{{ section.settings.title | escape }}</h2>
+      <h2 class="section-header h2 mb-8" style="color: var(--color-foreground);">{{ section.settings.title | escape }}</h2>
     {%- endif -%}
 
-    <div class="brand-grid {% if section.settings.grayscale %}brand-grid--grayscale{% endif %}">
-      {%- for block in section.blocks -%}
-        <div class="brand-item" {{ block.shopify_attributes }}>
-          {%- if block.settings.image != blank -%}
-            <img src="{{ block.settings.image | image_url: width: 160 }}" alt="{{ block.settings.image.alt }}" loading="lazy" width="160" height="auto">
-          {%- else -%}
-            <div class="placeholder-brand">{{ 'image' | placeholder_svg_tag }}</div>
-          {%- endif -%}
-        </div>
-      {%- endfor -%}
-    </div>
+    {%- if section.blocks.size == 0 -%}
+      <div class="text-center py-8 bg-surface rounded-2xl empty-state" style="border: 2px dashed var(--color-foreground); opacity: 0.5;">
+        <p class="m-0 text-sm">Select brand logos from Theme Editor.</p>
+      </div>
+    {%- else -%}
+      <div class="brand-grid {% if section.settings.white_logos %}brand-grid--white-logos{% endif %} {% if section.settings.grayscale and section.settings.white_logos == false %}brand-grid--grayscale{% endif %}">
+        {%- for block in section.blocks -%}
+          <div class="brand-item" {{ block.shopify_attributes }}>
+            {%- if block.settings.image != blank -%}
+              <img src="{{ block.settings.image | image_url: width: 160 }}" alt="{{ block.settings.image.alt }}" loading="lazy" width="160" height="auto">
+            {%- else -%}
+              <div class="placeholder-brand">{{ 'logo' | placeholder_svg_tag: 'placeholder-svg' }}</div>
+            {%- endif -%}
+          </div>
+        {%- endfor -%}
+      </div>
+    {%- endif -%}
   </div>
 </div>
 
 <style>
-  .brand-showcase { padding-top: 4rem; padding-bottom: 4rem; border-top: 1px solid rgba(0,0,0,0.05); border-bottom: 1px solid rgba(0,0,0,0.05); }
-  .brand-grid { display: flex; flex-wrap: wrap; justify-content: center; gap: 3rem; align-items: center; }
-  .brand-item img { max-width: 160px; height: auto; opacity: 0.7; transition: opacity 0.3s ease; filter: none; }
-  .brand-item img:hover { opacity: 1; }
-  .brand-grid--grayscale img { filter: grayscale(100%); }
-  .brand-grid--grayscale img:hover { filter: grayscale(0%); opacity: 1; }
-  .placeholder-brand { width: 120px; height: 60px; background: #f4f4f4; display: flex; align-items: center; justify-content: center; opacity: 0.5; color: #999; }
+  .brand-showcase { 
+    border-top: 1px solid rgba(128, 128, 128, 0.1); 
+    border-bottom: 1px solid rgba(128, 128, 128, 0.1); 
+    transition: background-color 0.3s ease, color 0.3s ease;
+  }
+  
+  .brand-grid { 
+    display: flex; 
+    flex-wrap: wrap; 
+    justify-content: center; 
+    gap: 4rem; 
+    align-items: center; 
+  }
+  
+  .brand-item img { 
+    max-width: 140px; 
+    height: auto; 
+    opacity: 0.7; 
+    transition: all 0.3s ease; 
+  }
+  
+  .brand-item img:hover { 
+    opacity: 1; 
+    transform: scale(1.05);
+  }
+  
+  /* Grayscale filter */
+  .brand-grid--grayscale img { 
+    filter: grayscale(100%); 
+  }
+  .brand-grid--grayscale img:hover { 
+    filter: grayscale(0%); 
+    opacity: 1; 
+  }
+  
+  /* White Logos Filter for Dark Themes (Mockup Requirement) */
+  .brand-grid--white-logos img {
+    filter: brightness(0) invert(1);
+    opacity: 0.6;
+  }
+  .brand-grid--white-logos img:hover {
+    filter: brightness(0) invert(1);
+    opacity: 1;
+  }
+  
+  .placeholder-brand { 
+    width: 120px; 
+    height: 60px; 
+    display: flex; 
+    align-items: center; 
+    justify-content: center; 
+    opacity: 0.3; 
+    color: var(--color-foreground); 
+  }
+  
+  .placeholder-brand svg {
+    width: 100%;
+    height: 100%;
+    fill: currentColor;
+  }
+  
+  @media screen and (max-width: 749px) {
+    .brand-grid { gap: 2rem; }
+    .brand-item img { max-width: 100px; }
+  }
 </style>
 
 {% schema %}
@@ -40,12 +121,6 @@
       "label": "Heading"
     },
     {
-      "type": "checkbox",
-      "id": "grayscale",
-      "default": true,
-      "label": "Grayscale images"
-    },
-    {
       "type": "select",
       "id": "color_scheme",
       "options": [
@@ -54,8 +129,23 @@
         { "value": "3", "label": "Carbon Black" },
         { "value": "4", "label": "Neon Green" }
       ],
-      "default": "2",
-      "label": "Color scheme"
+      "default": "3",
+      "label": "Color scheme",
+      "info": "Carbon Black is recommended for the premium electronics look."
+    },
+    {
+      "type": "checkbox",
+      "id": "grayscale",
+      "default": false,
+      "label": "Grayscale images",
+      "info": "Overrides original image colors with grayscale."
+    },
+    {
+      "type": "checkbox",
+      "id": "white_logos",
+      "default": true,
+      "label": "Force logos to be white",
+      "info": "Best used with Carbon Black or Electric Blue backgrounds. Overrides grayscale."
     }
   ],
   "blocks": [
