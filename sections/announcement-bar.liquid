@@ -1,49 +1,51 @@
 {%- if section.blocks.size > 0 -%}
-  <div class="announcement-bar color-scheme-{{ section.settings.color_scheme }} text-center py-2" role="region" aria-label="Announcement">
-    {%- for block in section.blocks -%}
-      {%- case block.type -%}
-        {%- when 'announcement' -%}
-          <div class="announcement-bar__message" {{ block.shopify_attributes }}>
-            {%- if block.settings.link != blank -%}
-              <a href="{{ block.settings.link }}" class="announcement-bar__link">
-            {%- endif -%}
-              <p class="h5 mt-0 mb-0">{{ block.settings.text | escape }}</p>
-            {%- if block.settings.link != blank -%}
-              </a>
-            {%- endif -%}
-          </div>
-      {%- endcase -%}
-    {%- endfor -%}
+  <div class="announcement-bar-wrapper" style="background-color: var(--color-primary); color: #ffffff; width: 100%; overflow: hidden; position: relative;">
+    <div class="page-width">
+      <div class="announcement-bar text-center py-2 relative flex justify-center items-center" role="region" aria-label="Announcement">
+        
+        {%- assign active_announcement = section.blocks.first -%}
+        
+        <div class="announcement-bar__message w-full text-center" {{ active_announcement.shopify_attributes }}>
+          {%- if active_announcement.settings.link != blank -%}
+            <a href="{{ active_announcement.settings.link }}" class="announcement-bar__link text-white no-underline hover:underline">
+          {%- endif -%}
+          
+            <p class="text-sm font-medium m-0 px-4 leading-snug">
+              {{ active_announcement.settings.text | escape }}
+            </p>
+            
+          {%- if active_announcement.settings.link != blank -%}
+            </a>
+          {%- endif -%}
+        </div>
+
+      </div>
+    </div>
   </div>
 {%- endif -%}
 
 <style>
-  .announcement-bar {
-    padding: 0.5rem 0;
+  .announcement-bar-wrapper {
+    z-index: 101;
   }
-  .announcement-bar__link {
-    text-decoration: underline;
+  .announcement-bar__message {
+    max-width: 100%;
+    word-break: break-word;
   }
+  .text-white { color: #ffffff !important; }
+  .no-underline { text-decoration: none; }
+  .hover\:underline:hover { text-decoration: underline; }
+  .text-sm { font-size: 0.875rem; }
+  .font-medium { font-weight: 500; }
+  .leading-snug { line-height: 1.375; }
+  .py-2 { padding-top: 0.5rem; padding-bottom: 0.5rem; }
 </style>
 
 {% schema %}
 {
   "name": "Announcement bar",
   "max_blocks": 1,
-  "settings": [
-    {
-      "type": "select",
-      "id": "color_scheme",
-      "options": [
-        { "value": "1", "label": "Electric Blue" },
-        { "value": "2", "label": "Arctic White" },
-        { "value": "3", "label": "Carbon Black" },
-        { "value": "4", "label": "Neon Green" }
-      ],
-      "default": "1",
-      "label": "Color scheme"
-    }
-  ],
+  "settings": [],
   "blocks": [
     {
       "type": "announcement",
@@ -52,7 +54,7 @@
         {
           "type": "text",
           "id": "text",
-          "default": "Welcome to our store",
+          "default": "Free shipping on all orders over $99 • Limited time offer!",
           "label": "Text"
         },
         {
@@ -63,12 +65,15 @@
       ]
     }
   ],
-  "default": {
-    "blocks": [
-      {
-        "type": "announcement"
-      }
-    ]
-  }
+  "presets": [
+    {
+      "name": "Announcement bar",
+      "blocks": [
+        {
+          "type": "announcement"
+        }
+      ]
+    }
+  ]
 }
 {% endschema %}
